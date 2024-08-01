@@ -7,10 +7,11 @@ export const metadata = {
   description: 'A collaboration platform for YouTubers and editors',
 };
 
+const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider  publishableKey={clerkPubKey}>
       <html lang="en">
         <body>
           <Navigation />

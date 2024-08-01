@@ -25,19 +25,30 @@ const InviteEditorForm = ({ workspaceId, onInviteSent }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="space-y-4">
+    <div className="flex flex-col">
+      <label htmlFor="email" className="mb-2 text-gray-700 font-semibold">
+        Editor Email
+      </label>
       <input
         type="email"
+        id="email"
         value={email}
         onChange={(e) => setEmail(e.target.value)}
         placeholder="Editor's email"
+        className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
         required
       />
-      <button type="submit" disabled={isLoading}>
-        {isLoading ? 'Sending...' : 'Invite Editor'}
-      </button>
-      {error && <p className="error">{error}</p>}
-    </form>
+    </div>
+    <button
+      type="submit"
+      className={`px-4 py-2 font-semibold rounded-md ${isLoading ? 'bg-gray-400' : 'bg-blue-500 hover:bg-blue-600'} text-white`}
+      disabled={isLoading}
+    >
+      {isLoading ? 'Sending...' : 'Invite Editor'}
+    </button>
+    {error && <p className="text-red-500 font-semibold">{error}</p>}
+  </form>
   );
 };
 

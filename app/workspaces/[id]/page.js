@@ -27,6 +27,7 @@ export default function WorkspaceDetail() {
   }, [id, getToken]);
   const fetchWorkspaceDetails = async () => {
     try {
+      setIsLoading(true);
       const token = await getToken()
       const response = await api.get(`/workspace/${id}`, {
          Authorization: `Bearer ${token}`
@@ -34,6 +35,8 @@ export default function WorkspaceDetail() {
       setWorkspace(response.data);
     } catch (error) {
       console.error('Error fetching workspace details:', error);
+    } finally{
+      setIsLoading(false);
     }
   }
 
@@ -54,25 +57,45 @@ export default function WorkspaceDetail() {
   //   fetchUserRole();
   // }, [id, user]);
 
-  if (!workspace) {
-    return <div>No Workspace to show...</div>;
+  if (isLoading) {
+    return  <div className="flex justify-center items-center">
+    <div className="loading">
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+      <span></span>
+    </div>
+    </div>
   }
- 
+  const renderEditors = () => {
+    return workspace.editors.map((editor) => (
+        <li key={editor.userId} className='text-gray-700'>
+            {editor.name}
+        </li>
+    ));
+};
 
   return (
-    <div>
-    <h1>{workspace.name}</h1>
-    <h2>Editors:</h2>
-    <ul>
-      {workspace.editors.map((editor) => (
-        <li key={editor}>{editor}</li>
-      ))}
+    <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-md">
+    <h1 className="text-2xl font-bold mb-4">Workspace: {workspace.name}</h1>
+    <p className="mb-4">
+      <span className="font-semibold text-gray-900 text-lg">Description:</span> {workspace.description}
+    </p>
+    <div className='flex items-center gap-2'>
+    <h2 className="text-lg font-semibold">Owner:</h2>
+    <p className=" text-gray-700">{workspace.owner.name}</p>
+    </div>
+    <div className='flex items-center gap-2'>
+    <h2 className="text-lg font-semibold">Editors:</h2>
+    <ul className=" space-y-2 text-gray-700">
+      {renderEditors()}
     </ul>
-  
-      <div>
-    <h2>Invite Editor:</h2>
-    <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
-    </div>  
+    </div>
+    <div className="mt-6">
+      <h2 className="text-xl font-semibold mb-4">Invite Editor:</h2>
+      <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
+    </div>
   </div>
   );
 }  
