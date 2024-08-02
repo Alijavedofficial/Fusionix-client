@@ -9,6 +9,7 @@ import { useUser, useAuth } from '@clerk/nextjs';
 export default function WorkspaceDetail() {
   const { id } = useParams();
   const [workspace, setWorkspace] = useState(null);
+  const [role, setRole] = useState(null);
   // const [videos, setVideos] = useState([]);
   // const [newEditorId, setNewEditorId] = useState('');
   // const [videoFile, setVideoFile] = useState(null);
@@ -18,11 +19,11 @@ export default function WorkspaceDetail() {
 
   const {user} = useUser()
   const {getToken} = useAuth()
-  // const role = user?.publicMetadata?.role
 
   useEffect(() => {
     if (id && getToken) {
       fetchWorkspaceDetails();
+      // getUserRole()
     }
   }, [id, getToken]);
   const fetchWorkspaceDetails = async () => {
@@ -39,6 +40,15 @@ export default function WorkspaceDetail() {
       setIsLoading(false);
     }
   }
+
+  // const getUserRole = async () => {
+  //   try {
+  //   const response = await api.get('/workspace/role')
+  //     setRole(response.data.role)
+  //   } catch (error) {
+  //     console.error('Error getting role', error);
+  //   }
+  //   }
 
   const handleInviteSent = () => {
     // Optionally refresh the workspace details or show a success message
@@ -92,10 +102,13 @@ export default function WorkspaceDetail() {
       {renderEditors()}
     </ul>
     </div>
-    <div className="mt-6">
-      <h2 className="text-xl font-semibold mb-4">Invite Editor:</h2>
-      <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
-    </div>
+    
+   { workspace.owner.userId === user.id && (
+      <div className="mt-6">
+        <h2 className="text-xl font-semibold mb-4">Invite Editor:</h2>
+        <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
+      </div>
+    )}
   </div>
   );
 }  

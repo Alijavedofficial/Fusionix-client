@@ -12,7 +12,7 @@ const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
 export default function RootLayout({ children }) {
   return (
     <ClerkProvider  publishableKey={clerkPubKey}>
-      <html lang="en">
+      <html>
         <body>
           <Navigation />
           <main className="container mx-auto mt-8 px-4">{children}</main>

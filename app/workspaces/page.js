@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import Link from "next/link";
 import api from "../../utils/api";
-import Loader from "../../components/loader";
 import { useAuth } from "@clerk/nextjs";
 
 export default function Workspaces() {
@@ -73,25 +72,25 @@ export default function Workspaces() {
             key={workspace._id}
             className="relative p-4 bg-white border border-gray-200 rounded-lg shadow-md mb-2 hover:bg-gray-100"
           >
-            <Link
+            <p key={workspace.name}
               href={`/workspaces/${workspace._id}`}
               className="text-blue-500 font-semibold hover:underline"
             >
               {workspace.name}
-            </Link>
-            <p className="text-sm text-gray-700 mt-2">
+            </p>
+            <p key={workspace.description} className="text-sm text-gray-700 mt-2">
               <span className="font-semibold text-gray-900">Description:</span>{" "}
               {workspace.description}
             </p>
-            <p className="text-sm text-gray-700">
+            <p key={workspace.owner.name} className="text-sm text-gray-700">
               <span className="font-semibold text-gray-900">Creator:</span>{" "}
               {workspace.owner.name}
             </p>
-            <p className="text-sm text-gray-700">
+            <p key={workspace.editors.length} className="text-sm text-gray-700">
               <span className="font-semibold text-gray-900">Editors:</span>{" "}
               {workspace.editors.length}
             </p>
-            <p className="text-sm text-gray-700">
+            <p key={workspace.lastModified} className="text-sm text-gray-700">
               <span className="font-semibold text-gray-900">
                 Last Modified:
               </span>{" "}
