@@ -18,7 +18,7 @@ export default function Navigation() {
             <>
               <Link href="/dashboard">Dashboard</Link>
               <Link href="/workspaces">Workspaces</Link>
-              <UserButton afterSignOutUrl="/" />
+              <UserButton afterSignOutUrl="/sign-in" />
             </>
           ) : (
             <Link href="/sign-in">Sign In</Link>

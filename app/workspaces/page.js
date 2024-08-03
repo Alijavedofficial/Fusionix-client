@@ -4,6 +4,8 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import api from "../../utils/api";
 import { useAuth } from "@clerk/nextjs";
+import { useUser } from "@clerk/nextjs";
+import FormatDate from "@/helpers/DateFormatter";
 
 export default function Workspaces() {
   const [workspaces, setWorkspaces] = useState([]);
@@ -52,28 +54,8 @@ export default function Workspaces() {
     }
   };
 
-  const formatDate = (isoString) => {
-    const date = new Date(isoString);
-    const now = new Date();
-    const diff = now - date;
-    const seconds = Math.floor(diff / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const hours = Math.floor(minutes / 60);
-    const days = Math.floor(hours / 24);
-  
-    if (days > 0) {
-      return `${days} day${days > 1 ? 's' : ''} ago`;
-    } else if (hours > 0) {
-      return `${hours} hour${hours > 1 ? 's' : ''} ago`;
-    } else if (minutes > 0) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
-    } else {
-      return 'Just now';
-    }
-  };
   const renderWorkspaces = () => {
     return workspaces.map((workspace) => {
-      const formattedDate = formatDate(workspace.lastModified);
       return (
         <Link href={`/workspaces/${workspace._id}`}>
           <li
@@ -102,7 +84,7 @@ export default function Workspaces() {
               <span className="font-semibold text-gray-900">
                 Last Modified:
               </span>{" "}
-              {formattedDate}
+              <FormatDate isoString={workspace.lastModified} />
             </p>
           </li>
         </Link>
@@ -112,7 +94,7 @@ export default function Workspaces() {
   return (
     <div className="text-black">
       <h1 className="text-2xl font-bold mb-4">Your Workspaces</h1>
-      <form onSubmit={createWorkspace} className="mb-4 flex flex-col gap-2">
+     <form onSubmit={createWorkspace} className="mb-4 flex flex-col gap-2">
         <input
           type="text"
           value={newWorkspaceName}
@@ -130,7 +112,7 @@ export default function Workspaces() {
         <button type="submit" className="bg-blue-500 text-white p-2 rounded">
           Create Workspace
         </button>
-      </form>
+      </form> 
       {isLoading ? (
         <div className="flex justify-center items-center">
         <div className="loading">

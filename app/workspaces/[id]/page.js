@@ -5,6 +5,7 @@ import { useParams } from "next/navigation";
 import api from "../../../utils/api";
 import InviteEditorForm from "../../../components/InviteEditorForm";
 import { useUser, useAuth } from "@clerk/nextjs";
+import Link from "next/link";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -13,16 +14,12 @@ export default function WorkspaceDetail() {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
-  const [workspaceId, setWorkspaceId] = useState("");
-  const [data, setData] = useState([]);
 
   const { user } = useUser();
   const { getToken } = useAuth();
-
   useEffect(() => {
     if (id && getToken) {
       fetchWorkspaceDetails();
-      
     }
   }, [id, getToken]);
 
@@ -41,20 +38,25 @@ export default function WorkspaceDetail() {
     }
   };
 
-
   const handleSubmit = async (e) => {
-    e.preventDefault();
-    const formData = new FormData();
-    formData.append('video', file);
-    formData.append("title", title);
-    formData.append("description", description);
-    formData.append('workspaceId', id)
-
-    const response = await api.post(`/video/upload`, formData)
-    setTitle("")
-    setDescription("")
-    setFile(null)
-  }
+    try {
+      setIsLoading(true);
+      e.preventDefault();
+      const formData = new FormData();
+      formData.append("video", file);
+      formData.append("title", title);
+      formData.append("description", description);
+      formData.append("workspaceId", id);
+      const response = await api.post(`/video/upload`, formData);
+      setTitle("");
+      setDescription("");
+      setFile(null);
+    } catch (error) {
+      console.error("Error uploading video", error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   const handleInviteSent = () => {
     fetchWorkspaceDetails();
@@ -104,66 +106,73 @@ export default function WorkspaceDetail() {
       </div>
 
       <form
-  onSubmit={handleSubmit}
-  className="space-y-4 p-4 bg-gray-100 rounded-lg shadow-md"
->
-  <div className="flex flex-col">
-    <label htmlFor="title" className="text-gray-700 font-medium mb-2">
-      Title
-    </label>
-    <input
-      type="text"
-      id="title"
-      value={title}
-      onChange={(e) => setTitle(e.target.value)}
-      placeholder="Enter the title"
-      required
-      className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
+        onSubmit={handleSubmit}
+        className="space-y-4 p-4 bg-gray-100 rounded-lg shadow-md"
+      >
+        <div className="flex flex-col">
+          <label htmlFor="title" className="text-gray-700 font-medium mb-2">
+            Title
+          </label>
+          <input
+            type="text"
+            id="title"
+            value={title}
+            onChange={(e) => setTitle(e.target.value)}
+            placeholder="Enter the title"
+            required
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-  <div className="flex flex-col">
-    <label htmlFor="description" className="text-gray-700 font-medium mb-2">
-      Description
-    </label>
-    <textarea
-      id="description"
-      value={description}
-      onChange={(e) => setDescription(e.target.value)}
-      placeholder="Enter a description"
-      required
-      rows="4"
-      className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-    />
-  </div>
+        <div className="flex flex-col">
+          <label
+            htmlFor="description"
+            className="text-gray-700 font-medium mb-2"
+          >
+            Description
+          </label>
+          <textarea
+            id="description"
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
+            placeholder="Enter a description"
+            required
+            rows="4"
+            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+        </div>
 
-  <div className="flex flex-col">
-    <label htmlFor="file" className="text-gray-700 font-medium mb-2">
-      Video File
-    </label>
-    <input
-      type="file"
-      id="file"
-      accept="video/*"
-      onChange={handleFileChange}
-      required
-      className="border border-gray-300 rounded-md p-2 bg-white"
-    />
-  </div>
+        <div className="flex flex-col">
+          <label htmlFor="file" className="text-gray-700 font-medium mb-2">
+            Video File
+          </label>
+          <input
+            type="file"
+            id="file"
+            accept="video/*"
+            onChange={handleFileChange}
+            required
+            className="border border-gray-300 rounded-md p-2 bg-white"
+          />
+        </div>
 
-  <button
-    type="submit"
-    className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-  >
-    Upload Video
-  </button>
-</form>
-
+        <button
+          type="submit"
+          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
+        >
+          Upload Video
+        </button>
+      </form>
 
       {workspace.owner.userId === user.id && (
         <div className="mt-6">
           <h2 className="text-xl font-semibold mb-4">Invite Editor:</h2>
           <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
+          <Link href={`/workspaces/${id}/videos`}>
+            <p className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+              View Videos
+            </p>
+          </Link>
         </div>
       )}
     </div>
