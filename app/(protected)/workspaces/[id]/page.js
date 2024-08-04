@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import api from "../../../utils/api";
-import InviteEditorForm from "../../../components/InviteEditorForm";
+import api from "../../../../utils/api";
+import InviteEditorForm from "../../../../components/InviteEditorForm";
 import { useUser, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 

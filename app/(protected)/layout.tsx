@@ -1,0 +1,22 @@
+'use client'
+import Navigation from '../../components/Navigation';
+import Sidebar from '../../components/sidebar'; 
+import { useState } from 'react';
+
+
+export default function Layout({ children }: { children: React.ReactNode }) {
+  const [isOpen, setIsOpen] = useState(false);
+
+  return (
+    
+      <div className="flex flex-col min-h-screen">
+        <Navigation setIsOpen={setIsOpen} isOpen={isOpen} />
+        <div className="flex flex-grow">
+          <Sidebar isOpen={isOpen} setIsOpen={setIsOpen} />
+          <div className={`flex-grow transition-margin duration-300 mt-16 ${isOpen ? 'ml-44' : 'ml-14'}`}>
+            <main className="mt-8 px-4 z-0">{children}</main>
+          </div>
+        </div>
+      </div>
+  );
+}

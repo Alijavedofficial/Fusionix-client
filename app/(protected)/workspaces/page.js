@@ -2,10 +2,9 @@
 
 import { useState, useEffect } from "react";
 import Link from "next/link";
-import api from "../../utils/api";
+import api from "../../../utils/api";
 import { useAuth } from "@clerk/nextjs";
-import { useUser } from "@clerk/nextjs";
-import FormatDate from "@/helpers/DateFormatter";
+import FormatDate from "../../../helpers/DateFormatter";
 
 export default function Workspaces() {
   const [workspaces, setWorkspaces] = useState([]);
