@@ -1,11 +1,14 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import api from "../../../../utils/api";
 import InviteEditorForm from "../../../../components/InviteEditorForm";
 import { useUser, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
+import { toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useRouter } from 'next/navigation';
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -14,6 +17,7 @@ export default function WorkspaceDetail() {
   const [file, setFile] = useState(null);
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const router = useRouter();
 
   const { user } = useUser();
   const { getToken } = useAuth();
@@ -28,7 +32,9 @@ export default function WorkspaceDetail() {
       setIsLoading(true);
       const token = await getToken();
       const response = await api.get(`/workspace/${id}`, {
-        Authorization: `Bearer ${token}`,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       setWorkspace(response.data);
     } catch (error) {
@@ -37,7 +43,30 @@ export default function WorkspaceDetail() {
       setIsLoading(false);
     }
   };
+  const DeleteWorkspace = async () => {
+    try {
+      const token = await getToken();
+      await api.delete(`workspace/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      toast.success("Workspace deleted successfully!");
+      router.push('/workspaces');
+    } catch (error) {
+      console.error("Error deleting workspace", error)
+      toast.error("Failed to delete workspace.");
+    }
+  };
 
+  const UpdateWorkspace = async () => {
+    try {
+      const token = await getToken();
+    } catch (error) {
+      console.error("Error updating workspace", error)
+      
+    }
+  };
   const handleSubmit = async (e) => {
     try {
       setIsLoading(true);
@@ -46,7 +75,7 @@ export default function WorkspaceDetail() {
       formData.append("video", file);
       formData.append("title", title);
       formData.append("description", description);
-      formData.append("workspaceId", id);
+      formData.append("workspaceId", id.toString());
       const response = await api.post(`/video/upload`, formData);
       setTitle("");
       setDescription("");
@@ -88,8 +117,9 @@ export default function WorkspaceDetail() {
   };
 
   return (
-    <div className="p-6 bg-white border border-gray-200 rounded-lg shadow-md">
+    <div className="p-6">
       <h1 className="text-2xl font-bold mb-4">Workspace: {workspace.name}</h1>
+      <button className='bg-red-800 p-2 text-white' onClick={DeleteWorkspace}>Delete</button>
       <p className="mb-4">
         <span className="font-semibold text-gray-900 text-lg">
           Description:
@@ -137,7 +167,6 @@ export default function WorkspaceDetail() {
             onChange={(e) => setDescription(e.target.value)}
             placeholder="Enter a description"
             required
-            rows="4"
             className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
         </div>

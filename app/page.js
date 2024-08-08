@@ -8,7 +8,7 @@ export default function Home() {
   if (user) {
     redirect('/dashboard');
   } else {
-    redirect('/sign-in');
+    redirect('/Home');
   }
 
   return null;
