@@ -1,15 +1,19 @@
+import { Icon } from '@iconify/react';
 import React from 'react';
+import ReactDOM from 'react-dom';
 
 const Modal = ({ isOpen, onClose, children }) => {
   if (!isOpen) return null;
 
-  return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center">
+  return ReactDOM.createPortal(
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40">
       <div className="bg-white p-6 rounded-lg">
-        <button onClick={onClose} className="float-right">X</button>
+        <button onClick={onClose} className="float-right">
+        <Icon icon="mdi:times" style={{ fontSize: "24px" }} />
+        </button>
         {children}
       </div>
-    </div>
+    </div>, document.body
   );
 };
 

@@ -25,6 +25,13 @@ export function Sidebar({ isOpen, setIsOpen }) {
             isOpen={isOpen}
             link="/workspaces"
           />
+          <SidebarItem
+            icon="mage:users"
+            text="Members"
+            isOpen={isOpen}
+            link="/members"
+          />
+
         </div>
       </div>
     </div>

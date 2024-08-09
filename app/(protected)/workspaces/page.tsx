@@ -9,10 +9,10 @@ import FormatDate from "../../../helpers/DateFormatter";
 export default function Workspaces() {
   const [workspaces, setWorkspaces] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const {getToken} = useAuth()
+  const [searchTerm, setSearchTerm] = useState("");
+  const { getToken } = useAuth();
 
-  
-   useEffect(() => {
+  useEffect(() => {
     const init = async () => {
       await fetchWorkspaces();
     };
@@ -22,7 +22,7 @@ export default function Workspaces() {
   const fetchWorkspaces = async () => {
     setIsLoading(true);
     try {
-      const token = await getToken()
+      const token = await getToken();
       const response = await api.get("/workspace", {
         headers: {
           Authorization: `Bearer ${token}`
@@ -36,46 +36,51 @@ export default function Workspaces() {
     }
   };
 
+  const filteredWorkspaces = workspaces.filter(workspace =>
+    workspace.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   const renderWorkspaces = () => {
-    return workspaces.map((workspace) => {
-      return (
-        <Link href={`/workspaces/${workspace._id}`}>
-          <li
-            key={workspace._id}
-            className="relative p-4 bg-white border border-gray-200 rounded-lg shadow-md mb-2 hover:bg-gray-100"
-          >
-            <p key={workspace.name}
-              className="text-blue-500 font-semibold hover:underline"
-            >
-              {workspace.name}
-            </p>
-            <p key={workspace.description} className="text-sm text-gray-700 mt-2">
-              <span className="font-semibold text-gray-900">Description:</span>{" "}
-              {workspace.description}
-            </p>
-            <p key={workspace.owner.name} className="text-sm text-gray-700">
-              <span className="font-semibold text-gray-900">Creator:</span>{" "}
-              {workspace.owner.name}
-            </p>
-            <p key={workspace.editors.length} className="text-sm text-gray-700">
-              <span className="font-semibold text-gray-900">Editors:</span>{" "}
-              {workspace.editors.length}
-            </p>
-            <p key={workspace.lastModified} className="text-sm text-gray-700">
-              <span className="font-semibold text-gray-900">
-                Last Modified:
-              </span>{" "}
-              <FormatDate isoString={workspace.lastModified} />
-            </p>
-          </li>
-        </Link>
-      );
-    });
+    return filteredWorkspaces.map((workspace) => (
+      <Link key={workspace._id} href={`/workspaces/${workspace._id}`}>
+        <li
+          className="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg mb-4 hover:bg-gray-50 transition-transform transform hover:scale-105"
+        >
+          <h3 className="text-xl font-semibold text-blue-600 hover:underline">{workspace.name}</h3>
+          <p className="text-sm text-gray-800 mt-2">
+            <span className="font-semibold text-gray-900">Description:</span>{" "}
+            {workspace.description}
+          </p>
+          <p className="text-sm text-gray-800 mt-1">
+            <span className="font-semibold text-gray-900">Creator:</span>{" "}
+            {workspace.owner.name}
+          </p>
+          <p className="text-sm text-gray-800 mt-1">
+            <span className="font-semibold text-gray-900">Editors:</span>{" "}
+            {workspace.editors.length}
+          </p>
+          <p className="text-sm text-gray-800 mt-1">
+            <span className="font-semibold text-gray-900">Last Modified:</span>{" "}
+            <FormatDate isoString={workspace.lastModified} />
+          </p>
+        </li>
+      </Link>
+    ));
   };
+
   return (
-    <div className="text-black">
-      <h1 className="text-2xl font-bold mb-4">Your Workspaces</h1>
-    
+    <div className="p-6 max-w-4xl mx-auto">
+      <header className="mb-6">
+        <h1 className="text-3xl font-bold text-gray-900">Your Workspaces</h1>
+        <input
+          type="text"
+          placeholder="Search Workspaces..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          className="mt-4 p-2 w-full border border-gray-300 rounded-lg"
+        />
+      </header>
+
       {isLoading ? (
         <div className="flex justify-center items-center">
         <div className="loading">

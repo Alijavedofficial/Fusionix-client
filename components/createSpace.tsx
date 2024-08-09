@@ -23,19 +23,20 @@ const CreateSpace = ({onClose, fetchworkspaces}) => {
   };
 
   return (
-    <form onSubmit={createWorkspace} className="mb-4 flex flex-col gap-2">
+    <form onSubmit={createWorkspace} className="p-2 flex flex-col space-y-4 w-[300px] max-sm:w-full">
+      <h1 className='font-medium'>Create Workspace</h1>
     <input
       type="text"
       value={newWorkspaceName}
       onChange={(e) => setNewWorkspaceName(e.target.value)}
       placeholder="New Workspace Name"
-      className="border p-2 mr-2"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
     />
     <textarea
       value={newWorkspaceDescription}
       onChange={(e) => setnewWorkspaceDescription(e.target.value)}
       placeholder="Enter description of workspace..."
-      className="border p-2 mr-2"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
     ></textarea>
     <button type="submit" className="bg-blue-500 text-white p-2 rounded">
       Create Workspace

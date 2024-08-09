@@ -1,26 +1,37 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { redirect, useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import api from "../../../../utils/api";
 import InviteEditorForm from "../../../../components/InviteEditorForm";
 import { useUser, useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
-import { useRouter } from 'next/navigation';
+import Modal from "../../../../components/Modal";
+import UploadVideo from "../../../../components/UploadVideo";
+import { Icon } from "@iconify/react";
+import DeleteWorkspaceModal from "../../../../components/DeleteConfirmation";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
   const [workspace, setWorkspace] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const [file, setFile] = useState(null);
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
   const router = useRouter();
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
+
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+  const openDeleteModal = () => setIsDeleteModalOpen(true);
+  const closeDeleteModal = () => setIsDeleteModalOpen(false);
+  const openEditorModal = () => setIsEditorModalOpen(true);
+  const closeEditorModal = () => setIsEditorModalOpen(false);
 
   const { user } = useUser();
   const { getToken } = useAuth();
+
   useEffect(() => {
     if (id && getToken) {
       fetchWorkspaceDetails();
@@ -43,6 +54,7 @@ export default function WorkspaceDetail() {
       setIsLoading(false);
     }
   };
+
   const DeleteWorkspace = async () => {
     try {
       const token = await getToken();
@@ -50,40 +62,12 @@ export default function WorkspaceDetail() {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      })
+      });
       toast.success("Workspace deleted successfully!");
       router.push('/workspaces');
     } catch (error) {
-      console.error("Error deleting workspace", error)
+      console.error("Error deleting workspace", error);
       toast.error("Failed to delete workspace.");
-    }
-  };
-
-  const UpdateWorkspace = async () => {
-    try {
-      const token = await getToken();
-    } catch (error) {
-      console.error("Error updating workspace", error)
-      
-    }
-  };
-  const handleSubmit = async (e) => {
-    try {
-      setIsLoading(true);
-      e.preventDefault();
-      const formData = new FormData();
-      formData.append("video", file);
-      formData.append("title", title);
-      formData.append("description", description);
-      formData.append("workspaceId", id.toString());
-      const response = await api.post(`/video/upload`, formData);
-      setTitle("");
-      setDescription("");
-      setFile(null);
-    } catch (error) {
-      console.error("Error uploading video", error);
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -91,23 +75,14 @@ export default function WorkspaceDetail() {
     fetchWorkspaceDetails();
   };
 
-  const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-  };
-
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-        <div className="loading">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
+      <div className="flex justify-center items-center h-screen">
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600 border-solid"></div>
       </div>
     );
   }
+
   const renderEditors = () => {
     return workspace.editors.map((editor) => (
       <li key={editor.userId} className="text-gray-700">
@@ -117,88 +92,67 @@ export default function WorkspaceDetail() {
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-4">Workspace: {workspace.name}</h1>
-      <button className='bg-red-800 p-2 text-white' onClick={DeleteWorkspace}>Delete</button>
-      <p className="mb-4">
-        <span className="font-semibold text-gray-900 text-lg">
-          Description:
-        </span>{" "}
-        {workspace.description}
-      </p>
-      <div className="flex items-center gap-2">
-        <h2 className="text-lg font-semibold">Owner:</h2>
-        <p className=" text-gray-700">{workspace.owner.name}</p>
+    <div className="p-6 mx-auto space-y-6">
+      <div className="flex items-center justify-between mb-6">
+        <h1 className="text-4xl font-extrabold text-gray-900">{workspace.name}</h1>
+        {workspace.owner.userId === user.id && (
+          <div className="flex items-center gap-4">
+            <button 
+              onClick={openEditorModal} 
+              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
+            >
+              Invite Editor
+            </button>
+            <button 
+              onClick={openDeleteModal}
+              className="bg-red-600 hover:bg-red-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
+            >
+              Delete Workspace
+            </button>
+          </div>
+        )}
       </div>
-      <div className="flex items-center gap-2">
-        <h2 className="text-lg font-semibold">Editors:</h2>
-        <ul className=" space-y-2 text-gray-700">{renderEditors()}</ul>
+      
+      <button onClick={openModal} className="w-full sm:w-auto">
+        <div className="flex items-center justify-between bg-white hover:bg-blue-50 p-4 rounded-lg border border-gray-300 cursor-pointer shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
+          <div className="flex gap-4 items-center">
+            <div className="bg-blue-100 p-3 rounded-lg">
+              <Icon icon="iconoir:youtube" className="text-blue-500" style={{ fontSize: "24px" }} />
+            </div>
+            <span className="font-semibold text-gray-900">Upload Video</span>
+          </div>
+          <Icon icon="material-symbols:upload" className="text-gray-500" style={{ fontSize: "24px" }} />
+        </div>
+      </button>
+
+      <div className="bg-white p-6 rounded-lg shadow-md">
+        <p className="mb-4 text-lg">
+          <span className="font-semibold text-gray-900">Description:</span> {workspace.description}
+        </p>
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Owner:</h2>
+          <p className="text-gray-700">{workspace.owner.name}</p>
+        </div>
+        <div className="mb-4">
+          <h2 className="text-lg font-semibold text-gray-900">Editors:</h2>
+          <ul className="space-y-2 text-gray-700">{renderEditors()}</ul>
+        </div>
       </div>
 
-      <form
-        onSubmit={handleSubmit}
-        className="space-y-4 p-4 bg-gray-100 rounded-lg shadow-md"
-      >
-        <div className="flex flex-col">
-          <label htmlFor="title" className="text-gray-700 font-medium mb-2">
-            Title
-          </label>
-          <input
-            type="text"
-            id="title"
-            value={title}
-            onChange={(e) => setTitle(e.target.value)}
-            placeholder="Enter the title"
-            required
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label
-            htmlFor="description"
-            className="text-gray-700 font-medium mb-2"
-          >
-            Description
-          </label>
-          <textarea
-            id="description"
-            value={description}
-            onChange={(e) => setDescription(e.target.value)}
-            placeholder="Enter a description"
-            required
-            className="p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
-          />
-        </div>
-
-        <div className="flex flex-col">
-          <label htmlFor="file" className="text-gray-700 font-medium mb-2">
-            Video File
-          </label>
-          <input
-            type="file"
-            id="file"
-            accept="video/*"
-            onChange={handleFileChange}
-            required
-            className="border border-gray-300 rounded-md p-2 bg-white"
-          />
-        </div>
-
-        <button
-          type="submit"
-          className="w-full bg-blue-500 text-white py-2 rounded-md hover:bg-blue-600 transition duration-300"
-        >
-          Upload Video
-        </button>
-      </form>
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <UploadVideo onClose={closeModal} />
+      </Modal>
+      <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
+        <DeleteWorkspaceModal onDelete={DeleteWorkspace} workspaceName={workspace.name} onCancel={closeDeleteModal} />
+      </Modal>
+      <Modal isOpen={isEditorModalOpen} onClose={closeEditorModal}>
+        <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
+      </Modal>
 
       {workspace.owner.userId === user.id && (
-        <div className="mt-6">
-          <h2 className="text-xl font-semibold mb-4">Invite Editor:</h2>
-          <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} />
+        <div className="mt-8">
           <Link href={`/workspaces/${id}/videos`}>
-            <p className="mt-4 inline-block bg-blue-500 hover:bg-blue-600 text-white font-bold py-2 px-4 rounded">
+            <p className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
               View Videos
             </p>
           </Link>
