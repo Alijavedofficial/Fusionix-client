@@ -85,8 +85,14 @@ export default function VideoDetailsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-spin border-4 border-t-4 border-blue-500 rounded-full w-12 h-12"></div>
+      <div className="flex justify-center items-center">
+      <div className="loading">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
       </div>
     );
   }
@@ -100,65 +106,56 @@ export default function VideoDetailsPage() {
   }
 
   return (
-    <div className="p-4">
-      <div className="p-4 flex justify-end items-center gap-2">
-          <YouTubeConnect />
-          {video.status === "pending" && (
-              <button
-                onClick={approveAndUploadVideo}
-                className="bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-red-700 transition-colors"
-              >
-                Approve and Upload to YouTube
-              </button>
-            )}
+    <div className="px-4">
+    <div className="p-4 flex justify-end items-center gap-2">
+      <YouTubeConnect />
+      {video.status === "pending" && (
+        <button
+          onClick={approveAndUploadVideo}
+          className="bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-red-700 transition-colors"
+        >
+          Approve and Upload to YouTube
+        </button>
+      )}
+    </div>
+    <div className="flex gap-6 px-14">
+      {/* Main video and details */}
+      <div className="flex-1">
+        <div className="w-full aspect-video">
+          <VideoPlayer src={video.cloudinaryId} />
         </div>
-      <div className="flex gap-6">
-        {/* Video Player Section */}
-        <div className="flex-1">
-          <div className="w-[800px] h-auto">
-            <VideoPlayer src={video.cloudinaryId} />
+        <div className="mt-4">
+          <h1 className="text-xl font-bold">{video.title}</h1>
+          <div className="flex items-center gap-4 my-2">
+            <p className="text-sm text-gray-500">{video.uploadedBy.name}</p>
+            <p className="text-sm text-gray-500">
+              <FormatDate isoString={video.createdAt} />
+            </p>
           </div>
-          <div className="flex flex-col mt-4">
-            <h1 className="text-2xl font-semibold mb-2">{video.title}</h1>
-            <p className="text-gray-600 mb-2">{video.description}</p>
-            <div className="flex items-center gap-4 mb-4">
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Uploaded by:</span> {video.uploadedBy.name}
-              </p>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Created:</span> <FormatDate isoString={video.createdAt} />
-              </p>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Last updated:</span> <FormatDate isoString={video.updatedAt} />
-              </p>
-              <p className="text-sm text-gray-500">
-                <span className="font-semibold">Status:</span> {video.status}
-              </p>
-            </div>
-           
-          </div> 
-        </div>  
-        <div className="w-80 lg:w-96">
-  <h2 className="text-lg font-semibold mb-4">More videos</h2>
-  <div className="space-y-3">
-    {otherVideos.map((video) => (
-      <Link href={`/workspaces/${video.workspaceId}/videos/${video._id}`} key={video._id}>
-        <div className="flex space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-          <div className="w-40 h-24 bg-gray-200 rounded overflow-hidden">
-            <video src={video.cloudinaryId} className="w-full h-full object-cover" />
-          </div>
-          <div className="flex-1">
-            <h3 className="text-sm font-semibold line-clamp-2">{video.title}</h3>
-            <p className="text-xs text-gray-500 mt-1">{video.uploadedBy.name}</p>
-            <p className="text-xs text-gray-500">Status: {video.status}</p>
-          </div>
+          <p className="text-sm text-gray-600 mt-4">{video.description}</p>
         </div>
-      </Link>
-    ))}
-  </div>
-</div>
       </div>
       
+      {/* Other videos list */}
+      <div className="w-80 lg:w-96">
+        <div className="space-y-3">
+          {otherVideos.map((video) => (
+            <Link href={`/workspaces/${video.workspaceId}/videos/${video._id}`} key={video._id}>
+              <div className="flex space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
+                <div className="w-40 h-24 bg-gray-200 rounded overflow-hidden">
+                  <video src={video.cloudinaryId} className="w-full h-full object-cover" />
+                </div>
+                <div className="flex-1">
+                  <h3 className="text-sm font-semibold line-clamp-2">{video.title}</h3>
+                  <p className="text-xs text-gray-500 mt-1">{video.uploadedBy.name}</p>
+                  <p className="text-xs text-gray-500">Status: {video.status}</p>
+                </div>
+              </div>
+            </Link>
+          ))}
+        </div>
+      </div>
     </div>
+  </div>
   );
 }

@@ -9,28 +9,28 @@ const HomePage: React.FC = () => {
         <div className="text-xl font-bold">
           {/* Logo */}
           <Link href="/">
-            <p className="text-blue-600">YT Collaboration</p>
+            <p className="text-primary">YT Collaboration</p>
           </Link>
         </div>
         <div className="flex space-x-4">
           {/* Navbar items */}
           <Link href="/features">
-            <p className="text-gray-600 hover:text-blue-600">Features</p>
+            <p className="text-gray-600 hover:text-primary">Features</p>
           </Link>
           <Link href="/pricing">
-            <p className="text-gray-600 hover:text-blue-600">Pricing</p>
+            <p className="text-gray-600 hover:text-primary">Pricing</p>
           </Link>
           <Link href="/contact">
-            <p className="text-gray-600 hover:text-blue-600">Contact</p>
+            <p className="text-gray-600 hover:text-primary">Contact</p>
           </Link>
         </div>
         <div className="flex space-x-4">
           {/* Sign In and Sign Up buttons */}
           <Link href="/sign-in">
-            <p className="text-gray-600 hover:text-blue-600">Sign In</p>
+            <p className="text-gray-600 hover:text-primary">Sign In</p>
           </Link>
           <Link href="/sign-up">
-            <p className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">Sign Up</p>
+            <p className="bg-primary text-white px-4 py-2 rounded hover:bg-opacity-80">Sign Up</p>
           </Link>
         </div>
       </nav>
@@ -51,12 +51,12 @@ const HomePage: React.FC = () => {
         {/* Action Buttons */}
         <div className="mt-6 flex space-x-4">
           <Link href="/get-started">
-            <p className="bg-blue-600 text-white px-6 py-3 rounded-md text-lg hover:bg-blue-700">
+            <p className="bg-primary text-white px-6 py-3 rounded-md text-lg hover:bg-opacity-80">
               Get Started
             </p>
           </Link>
           <Link href="/learn-more">
-            <p className="text-blue-600 border border-blue-600 px-6 py-3 rounded-md text-lg hover:bg-blue-100">
+            <p className="text-primary border border-primary px-6 py-3 rounded-md text-lg hover:bg-blue-100">
               Learn More
             </p>
           </Link>

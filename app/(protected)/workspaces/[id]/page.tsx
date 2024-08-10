@@ -12,6 +12,7 @@ import Modal from "../../../../components/Modal";
 import UploadVideo from "../../../../components/UploadVideo";
 import { Icon } from "@iconify/react";
 import DeleteWorkspaceModal from "../../../../components/DeleteConfirmation";
+import Image from "next/image";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -78,16 +79,19 @@ export default function WorkspaceDetail() {
   if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-blue-600 border-solid"></div>
+        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary border-solid"></div>
       </div>
     );
   }
 
   const renderEditors = () => {
     return workspace.editors.map((editor) => (
+      <div>
       <li key={editor.userId} className="text-gray-700">
         {editor.name}
       </li>
+      <Image src={workspace.editors[0].ProfilePic || 'https://dashboard.clerk.com/_next/image?url=https%3A%2F%2Fimg.clerk.com%2FeyJ0eXBlIjoiZGVmYXVsdCIsImlpZCI6Imluc18yanpBT3ZxNW9KNTJscFNxMXNoYzl0cFFxY0oiLCJyaWQiOiJ1c2VyXzJrNDNrTVhBT1VKVUlGZTJQVURXQ0wxZlFFVCIsImluaXRpYWxzIjoiQSJ9&w=1920&q=75'} width={30} height={30} className="rounded-full w-8 h-auto" alt="editor" />
+      </div>
     ));
   };
 
@@ -99,7 +103,7 @@ export default function WorkspaceDetail() {
           <div className="flex items-center gap-4">
             <button 
               onClick={openEditorModal} 
-              className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
+              className="bg-primary hover:bg-opacity-80 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
             >
               Invite Editor
             </button>
@@ -117,7 +121,7 @@ export default function WorkspaceDetail() {
         <div className="flex items-center justify-between bg-white hover:bg-blue-50 p-4 rounded-lg border border-gray-300 cursor-pointer shadow-md hover:shadow-lg transition-transform transform hover:scale-105">
           <div className="flex gap-4 items-center">
             <div className="bg-blue-100 p-3 rounded-lg">
-              <Icon icon="iconoir:youtube" className="text-blue-500" style={{ fontSize: "24px" }} />
+              <Icon icon="iconoir:youtube" className="text-primary" style={{ fontSize: "24px" }} />
             </div>
             <span className="font-semibold text-gray-900">Upload Video</span>
           </div>
@@ -136,6 +140,7 @@ export default function WorkspaceDetail() {
         <div className="mb-4">
           <h2 className="text-lg font-semibold text-gray-900">Editors:</h2>
           <ul className="space-y-2 text-gray-700">{renderEditors()}</ul>
+         
         </div>
       </div>
 
@@ -152,7 +157,7 @@ export default function WorkspaceDetail() {
       {workspace.owner.userId === user.id && (
         <div className="mt-8">
           <Link href={`/workspaces/${id}/videos`}>
-            <p className="inline-block bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-lg transition-colors">
+            <p className="inline-block bg-primary hover:bg-opacity-80 text-white font-bold py-2 px-4 rounded-lg transition-colors">
               View Videos
             </p>
           </Link>

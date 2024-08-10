@@ -1,6 +1,7 @@
 'use client'
 import React, { useState } from 'react';
 import api from '../utils/api';
+import { toast } from 'react-toastify';
 
 export default function InviteEditorForm({ workspaceId, onInviteSent }){
   const [email, setEmail] = useState('');
@@ -15,7 +16,7 @@ export default function InviteEditorForm({ workspaceId, onInviteSent }){
     try {
       await api.post('/workspace/invite-editor', { workspaceId, editorEmail: email });
       setEmail('');
-      console.log('Email sent successfully')
+      toast.success('Email Sent Successfully!')
       onInviteSent();
     } catch (err) {
       setError(err.response?.data?.message || 'An error occurred while sending the invitation.');
@@ -38,14 +39,14 @@ export default function InviteEditorForm({ workspaceId, onInviteSent }){
       value={email}
       onChange={(e) => setEmail(e.target.value)}
       placeholder="Enter editor's email"
-      className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500"
+      className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
       required
     />
   </div>
   
   <button
     type="submit"
-    className={`w-full py-3 font-semibold rounded-md ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-blue-600 hover:bg-blue-700'} text-white transition duration-200`}
+    className={`w-full py-3 font-semibold rounded-md ${isLoading ? 'bg-gray-400 cursor-not-allowed' : 'bg-primary hover:bg-opacity-80'} text-white transition duration-200`}
     disabled={isLoading}
   >
     {isLoading ? 'Sending Invitation...' : 'Invite Editor'}

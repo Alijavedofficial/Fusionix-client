@@ -15,7 +15,7 @@ const FormatDate = ({ isoString }) => {
     } else if (hours > 0) {
       return `${hours} hour${hours > 1 ? 's' : ''} ago`;
     } else if (minutes > 0) {
-      return `${minutes} minute${minutes > 1 ? 's' : ''} ago`;
+      return `${minutes} min${minutes > 1 ? 's' : ''} ago`;
     } else {
       return 'Just now';
     }

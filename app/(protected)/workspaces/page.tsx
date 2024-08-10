@@ -46,7 +46,7 @@ export default function Workspaces() {
         <li
           className="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg mb-4 hover:bg-gray-50 transition-transform transform hover:scale-105"
         >
-          <h3 className="text-xl font-semibold text-blue-600 hover:underline">{workspace.name}</h3>
+          <h3 className="text-xl font-semibold text-primary hover:underline">{workspace.name}</h3>
           <p className="text-sm text-gray-800 mt-2">
             <span className="font-semibold text-gray-900">Description:</span>{" "}
             {workspace.description}

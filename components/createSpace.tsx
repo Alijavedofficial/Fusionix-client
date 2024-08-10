@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import api from "../utils/api";
+import { toast } from 'react-toastify';
 
 const CreateSpace = ({onClose, fetchworkspaces}) => {
     const [newWorkspaceDescription, setnewWorkspaceDescription] = useState("");
@@ -19,6 +20,8 @@ const CreateSpace = ({onClose, fetchworkspaces}) => {
       onClose()
     } catch (error) {
       console.error("Error creating workspace:", error);
+    } finally {
+      toast.success('Workspace created successfully!')
     }
   };
 
@@ -30,15 +33,15 @@ const CreateSpace = ({onClose, fetchworkspaces}) => {
       value={newWorkspaceName}
       onChange={(e) => setNewWorkspaceName(e.target.value)}
       placeholder="New Workspace Name"
-      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200"
     />
     <textarea
       value={newWorkspaceDescription}
       onChange={(e) => setnewWorkspaceDescription(e.target.value)}
       placeholder="Enter description of workspace..."
-      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition duration-200"
+      className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200"
     ></textarea>
-    <button type="submit" className="bg-blue-500 text-white p-2 rounded">
+    <button type="submit" className="bg-primary text-white p-2 rounded">
       Create Workspace
     </button>
   </form> 
