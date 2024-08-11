@@ -112,3 +112,11 @@ body {
             transform: scale(1);
   }
 }
+
+.custom-dotted-border {
+  background-image: linear-gradient(to bottom, #8b8b8b 33%, transparent 33%);
+  background-position: right;
+  background-size: 2px 9px;
+  background-repeat: repeat-y;
+  padding-right: 10px; /* Adjust this value to control distance from content */
+}

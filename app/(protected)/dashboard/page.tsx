@@ -21,6 +21,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../components/ui/PopOver";
+import Loader from "../../../components/Loader";
 
 interface Workspace {
   _id: string;
@@ -98,23 +99,67 @@ export default function Dashboard() {
   };
 
   if (isLoading) {
-    return (
-      <div className="flex justify-center items-center">
-        <div className="loading">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-      </div>
-    );
+    return <Loader />;
   }
 
   return (
-    <div className="flex flex-col justify-betweem gap-10 p-2 w-[60%]">
+    <div className="flex flex-col justify-betweem gap-10 p-2">
+      <div className="flex items-center flex-grow rounded-lg border border-gray-300 p-4">
+        <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
+        <div className="bg-blue-100 p-3 rounded-lg">
+              <Icon
+                icon="ph:briefcase-light"
+                className="text-primary"
+                style={{ fontSize: "24px" }}
+              />
+            </div>
+            <div className="flex flex-col">
+          <h6>Total Workspaces</h6>
+          <h1 className="font-bold text-xl">2</h1>
+          </div>
+        </div>
+        <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
+        <div className="bg-blue-100 p-3 rounded-lg">
+              <Icon
+                icon="mage:users"
+                className="text-primary"
+                style={{ fontSize: "24px" }}
+              />
+            </div>
+            <div className="flex flex-col">
+          <h6>Total Members</h6>
+          <h1 className="font-bold text-xl">3</h1>
+          </div>
+        </div>
+        <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
+        <div className="bg-blue-100 p-3 rounded-lg">
+              <Icon
+                icon="mdi:approve"
+                className="text-primary"
+                style={{ fontSize: "24px" }}
+              />
+            </div>
+            <div className="flex flex-col">
+          <h6>Approved Videos</h6>
+          <h1 className="font-bold text-xl">5</h1>
+          </div>
+        </div>
+        <div className="flex px-4 py-2 gap-8 flex-grow">
+        <div className="bg-blue-100 p-3 rounded-lg">
+              <Icon
+                icon="material-symbols-light:pending-actions-rounded"
+                className="text-primary"
+                style={{ fontSize: "24px" }}
+              />
+            </div>
+            <div className="flex flex-col">
+          <h6>Pending Videos</h6>
+          <h1 className="font-bold text-xl">2</h1>
+          </div>
+        </div>
+      </div>
       {/* add new workspace */}
-      <button onClick={openModal} className="w-[40%]">
+      {/* <button onClick={openModal} className="w-[40%]">
         <div className="flex items-center justify-between bg-white hover:text-primary  p-2 rounded-lg border border-gray-300 cursor-pointer hover:shadow-lg transition-shadow">
           <div className="flex gap-4 justify-center items-center">
             <div className="bg-blue-100 p-4 rounded-lg">
@@ -128,10 +173,10 @@ export default function Dashboard() {
           </div>
           <Icon icon="tabler:plus" className="" style={{ fontSize: "20px" }} />
         </div>
-      </button>
+      </button> */}
 
-      <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow w-full  hover:shadow-lg transition-shadow">
-        {/* Workspace Heading and Buttons for add and view all */}
+      <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow hover:shadow-lg transition-shadow w-[60%]">
+        {/* Workspace Heading and Buttons for view all */}
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold mb-4">Workspaces</h1>
           <div className="flex justify-center items-center gap-4">
@@ -220,7 +265,9 @@ export default function Dashboard() {
                         </button>
                       </PopoverTrigger>
                       <PopoverContent>
-                      <p className="p-2 border-b border-gray-300 text-[15px] font-medium">Options</p>
+                        <p className="p-2 border-b border-gray-300 text-[15px] font-medium">
+                          Options
+                        </p>
                         <div className="flex flex-col space-y-1 p-1">
                           <button className="flex items-center justify-between font-medium space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-md transition-colors duration-200">
                             <span>Visit</span>
@@ -252,7 +299,7 @@ export default function Dashboard() {
       </div>
 
       {/* Videos Table */}
-      <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow w-full  hover:shadow-lg transition-shadow">
+      <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow w-[60%]  hover:shadow-lg transition-shadow">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold mb-4">Recent Videos</h1>
         </div>
@@ -335,10 +382,10 @@ export default function Dashboard() {
                         </button>
                       </PopoverTrigger>
                       <PopoverContent>
-                        <p className="p-2 border-b border-gray-300 text-[15px] font-medium">Options</p>
+                        <p className="p-2 border-b border-gray-300 text-[15px] font-medium">
+                          Options
+                        </p>
                         <div className="flex flex-col space-y-1 p-1">
-                          
-                         
                           <button className="flex items-center justify-between space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-md transition-colors duration-200 font-medium">
                             <span>Approve</span>
                             <Icon icon="mdi:approve" className="text-lg" />
