@@ -5,7 +5,6 @@ import api from "../../../utils/api";
 import { useEffect, useState } from "react";
 import FormatDate from "../../../helpers/DateFormatter";
 import { Icon } from "@iconify/react";
-import { set } from "react-hook-form";
 import CreateSpace from "../../../components/createSpace";
 import Modal from "../../../components/Modal";
 import { toast } from "react-toastify";
@@ -21,7 +20,7 @@ import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "../../../components/ui/PopOver"
+} from "../../../components/ui/PopOver";
 
 interface Workspace {
   _id: string;
@@ -210,32 +209,39 @@ export default function Dashboard() {
                     </div>
                   </td>
                   <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                  <Popover>
-                  <PopoverTrigger>
-                  <button className="hover:bg-gray-300 rounded-md p-2">
-                    <Icon
-                      icon="tabler:dots"
-                      className=""
-                      style={{ fontSize: "18px" }}
-                    />
-                    </button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                    <div className="flex flex-col space-y-2 p-2">
-      <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-200">
-        <Icon icon="mdi:pencil" className="text-lg" />
-        <span>Update</span>
-      </button>
-      <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-200">
-        <Icon icon="mdi:delete" className="text-lg" />
-        <span>Delete</span>
-      </button>
-      <button className="flex items-center space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-gray-100 rounded-md transition-colors duration-200">
-        <Icon icon="mdi:open-in-new" className="text-lg" />
-        <span>Visit</span>
-      </button>
-    </div>
-                    </PopoverContent>
+                    <Popover>
+                      <PopoverTrigger>
+                        <button className="hover:bg-gray-300 rounded-md p-2">
+                          <Icon
+                            icon="tabler:dots"
+                            className=""
+                            style={{ fontSize: "18px" }}
+                          />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                      <p className="p-2 border-b border-gray-300 text-[15px] font-medium">Options</p>
+                        <div className="flex flex-col space-y-1 p-1">
+                          <button className="flex items-center justify-between font-medium space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-md transition-colors duration-200">
+                            <span>Visit</span>
+                            <Icon icon="mdi:open-in-new" className="text-lg" />
+                          </button>
+                          <button className="flex items-center justify-between font-medium space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-600 rounded-md transition-colors duration-200">
+                            <span>Update</span>
+                            <Icon
+                              icon="octicon:pencil-24"
+                              className="text-lg"
+                            />
+                          </button>
+                          <button className="flex items-center justify-between font-medium space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-red-100 hover:text-red-600 rounded-md transition-colors duration-200">
+                            <span>Delete</span>
+                            <Icon
+                              icon="ant-design:delete-outlined"
+                              className="text-lg"
+                            />
+                          </button>
+                        </div>
+                      </PopoverContent>
                     </Popover>
                   </td>
                 </tr>
@@ -266,7 +272,7 @@ export default function Dashboard() {
                 <th className="px-6 py-2 text-left text-xs font-medium uppercase tracking-wider">
                   Uploaded By
                 </th>
-                <th className="px-6 py-2 text-left text-xs font-medium  uppercase tracking-wider">
+                <th className="px-8 py-2 text-left text-xs font-medium  uppercase tracking-wider">
                   <Icon
                     icon="tabler:dots"
                     className=""
@@ -318,11 +324,42 @@ export default function Dashboard() {
                     {video.uploadedBy.name}
                   </td>
                   <td className="px-6 py-2 whitespace-nowrap text-sm text-gray-500">
-                    <Icon
-                      icon="tabler:dots"
-                      className=""
-                      style={{ fontSize: "18px" }}
-                    />
+                    <Popover>
+                      <PopoverTrigger>
+                        <button className="hover:bg-gray-300 rounded-md p-2">
+                          <Icon
+                            icon="tabler:dots"
+                            className=""
+                            style={{ fontSize: "18px" }}
+                          />
+                        </button>
+                      </PopoverTrigger>
+                      <PopoverContent>
+                        <p className="p-2 border-b border-gray-300 text-[15px] font-medium">Options</p>
+                        <div className="flex flex-col space-y-1 p-1">
+                          
+                         
+                          <button className="flex items-center justify-between space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-blue-100 hover:text-blue-600 rounded-md transition-colors duration-200 font-medium">
+                            <span>Approve</span>
+                            <Icon icon="mdi:approve" className="text-lg" />
+                          </button>
+                          <button className="flex items-center justify-between space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-600 rounded-md transition-colors duration-200 font-medium">
+                            <span>Update</span>
+                            <Icon
+                              icon="octicon:pencil-24"
+                              className="text-lg"
+                            />
+                          </button>
+                          <button className="flex items-center justify-between space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-red-100 hover:text-red-600 rounded-md transition-colors duration-200 font-medium">
+                            <span>Delete</span>
+                            <Icon
+                              icon="ant-design:delete-outlined"
+                              className="text-lg"
+                            />
+                          </button>
+                        </div>
+                      </PopoverContent>
+                    </Popover>
                   </td>
                 </tr>
               ))}

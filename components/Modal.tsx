@@ -9,7 +9,7 @@ const Modal = ({ isOpen, onClose, children }) => {
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-40 ">
       <div className="bg-white p-6 rounded-lg border border-gray-400 ">
         <button onClick={onClose} className="float-right">
-        <Icon icon="mdi:times" style={{ fontSize: "24px" }} />
+        <Icon icon="prime:times-circle" style={{ fontSize: "30px" }} />
         </button>
         {children}
       </div>
