@@ -43,7 +43,7 @@ const SidebarItem = ({ icon, text, isOpen, link }) => {
     <Link
       href={link}
       passHref
-      className="flex items-center p-4 cursor-pointer text-[#505f79] hover:text-[#2684ff] transition"
+      className="flex items-center p-4 cursor-pointer text-[#505f79] hover:text-primary transition"
     >
       <Icon icon={icon} className="" style={{ fontSize: "18px" }} /> &ensp;
       {isOpen && <span>{text}</span>}

@@ -158,6 +158,117 @@ export default function Dashboard() {
           </div>
         </div>
       </div>
+
+
+       <div className="flex justify-between gap-5 ">
+          <div className="bg-white flex-grow p-2 rounded-md px-4 w-[45%] custom-shadow-container duration-300 transition-shadow">
+            <div className="flex justify-between items-center custom-dotted-bottomborder py-4">
+              <h1 className='font-semibold text-lg'>Workspaces</h1>
+              <div className="flex gap-2 items-center">
+              <TooltipProvider> 
+              <Tooltip delayDuration={100}>
+              <TooltipTrigger>
+              <button onClick={openModal} className="bg-primary text-white rounded-md p-2 border border-gray-300">
+                          <Icon icon="material-symbols:add" style={{ fontSize: "18px" }} />
+              </button>
+              </TooltipTrigger>
+              <TooltipContent>
+                          <p>Create Workspace</p>
+                        </TooltipContent> 
+              </Tooltip>
+              </TooltipProvider>
+             <TooltipProvider>
+              <Tooltip delayDuration={100}>
+                <TooltipTrigger>
+                <button className=" rounded-md p-2 border border-gray-300 custom-shadow">
+                          <Icon icon="ci:expand" style={{ fontSize: "18px" }} />
+              </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View All</p>
+                </TooltipContent>
+              </Tooltip>
+             </TooltipProvider>
+              
+              </div>
+            </div>
+
+            <div className="grid grid-cols-2 items-center gap-4 py-4">
+            
+      {workspaces.map((item, index) => (
+        <Link href={`/workspaces/${item._id}`} key={index}>
+      <div className="flex items-center gap-4 bg-white p-3 rounded-lg border border-gray-300 cursor-pointer custom-shadow transition-shadow duration-300">
+      <span className="inline-flex items-center w-12 h-12 justify-center bg-blue-100 text-primary text-[20px] font-semibold rounded px-4 py-3 uppercase">
+            {item.name.charAt(0)}
+      </span>
+      <div className="flex flex-col  items-start">
+      <span className="font-medium">{item.name}</span>
+      <span className="text-gray-500 text-sm">{item.editors.length} Editors</span>
+      </div>
+      </div>
+      </Link>
+        ))}
+    </div>
+          </div>
+
+          <div className="bg-white flex-grow p-2 rounded-md px-4 w-[55%] custom-shadow-container duration-300 transition-shadow">
+            <div className="flex justify-between items-center custom-dotted-bottomborder py-4">
+              <h1 className='font-semibold text-lg'>Recent Videos</h1>
+              <TooltipProvider>
+              <Tooltip delayDuration={100}>
+                <TooltipTrigger>
+                <button className=" rounded-md p-2 border border-gray-300 custom-shadow">
+                          <Icon icon="ci:expand" style={{ fontSize: "18px" }} />
+              </button>
+                </TooltipTrigger>
+                <TooltipContent>
+                  <p>View All</p>
+                </TooltipContent>
+              </Tooltip>
+             </TooltipProvider>
+            </div>
+            
+            <div className="grid grid-cols-2 items-center gap-4 py-4">
+            
+            {videos.map((video) => (
+              <Link href={`workspaces/${video.workspaceId}/videos/${video._id}`}>
+            <div className="flex items-center gap-4 bg-white p-3 rounded-lg border border-gray-300 cursor-pointer custom-shadow transition-shadow duration-300">
+            <span className="">
+            <div className="relative w-12 h-12 bg-blue-100 group">
+                        <video
+                          src={video.cloudinaryId}
+                          className="w-full h-full object-cover rounded-md"
+                        />
+                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md">
+                          <Icon
+                            icon="mdi:play"
+                            className="text-red-600"
+                            style={{ fontSize: "34px" }}
+                          />
+                        </div>
+            </div>
+            </span>
+            <div className="flex flex-col  items-start">
+            <span className="font-medium">{video.title}</span>
+            <span className={`text-sm font-medium ${
+                      video.status === "approved"
+                        ? "text-green-400"
+                        : video.status === "rejected"
+                        ? "text-red-400"
+                        : "text-yellow-500"
+                    }`}>{video.status}</span>
+            </div>
+            </div>
+            </Link>
+              ))}
+          </div>
+          </div>
+       </div>
+
+       <Modal isOpen={isModalOpen} onClose={closeModal}>
+          <CreateSpace onClose={closeModal} fetchworkspaces={fetchWorkspaces} />
+        </Modal>
+
       {/* add new workspace */}
       {/* <button onClick={openModal} className="w-[40%]">
         <div className="flex items-center justify-between bg-white hover:text-primary  p-2 rounded-lg border border-gray-300 cursor-pointer hover:shadow-lg transition-shadow">
@@ -175,8 +286,8 @@ export default function Dashboard() {
         </div>
       </button> */}
 
-      <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow hover:shadow-lg transition-shadow w-[60%]">
-        {/* Workspace Heading and Buttons for view all */}
+      {/* <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow hover:shadow-lg transition-shadow w-[60%]"> */}
+        {/* Workspace Heading and Buttons for view all 
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold mb-4">Workspaces</h1>
           <div className="flex justify-center items-center gap-4">
@@ -186,11 +297,9 @@ export default function Dashboard() {
           </div>
         </div>
 
-        <Modal isOpen={isModalOpen} onClose={closeModal}>
-          <CreateSpace onClose={closeModal} fetchworkspaces={fetchWorkspaces} />
-        </Modal>
+        
 
-        {/* Workspace Table */}
+        {/* Workspace Table 
         <div className="bg-white rounded-lg shadow overflow-hidden">
           <table className="min-w-full divide-y divide-gray-200">
             <thead className="bg-primary">
@@ -297,8 +406,8 @@ export default function Dashboard() {
           </table>
         </div>
       </div>
-
-      {/* Videos Table */}
+      */}
+      {/* Videos Table 
       <div className="bg-white border border-gray-300 rounded-lg shadow overflow-hidden p-4 flex-grow w-[60%]  hover:shadow-lg transition-shadow">
         <div className="flex justify-between items-center">
           <h1 className="text-xl font-semibold mb-4">Recent Videos</h1>
@@ -413,7 +522,7 @@ export default function Dashboard() {
             </tbody>
           </table>
         </div>
-      </div>
+      </div>*/}
     </div>
   );
 }
