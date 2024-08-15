@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
             className="rounded-xl h-[550px]"
           />
         </div>
-        <BackgroundBeams />
+        {/* <BackgroundBeams /> */}
       </section>
 
       <section className="p-20 bg-white shadow-md rounded-xl border border-gray-300 items-start w-full">

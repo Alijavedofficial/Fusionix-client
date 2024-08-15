@@ -1,13 +1,14 @@
 "use client";
 
 import api from "../../../../../../utils/api";
-import { useParams } from "next/navigation";
+import { redirect, useParams } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
 import { useState, useEffect } from "react";
 import FormatDate from "../../../../../../helpers/DateFormatter";
 import YouTubeConnect from "../../../../../../components/youtubeConnect";
 import VideoPlayer from "../../../../../../components/youtubePlayer";
 import Link from "next/link";
+import { toast } from "react-toastify";
 
 interface Video {
   _id: string;
@@ -78,6 +79,8 @@ export default function VideoDetailsPage() {
         },
       });
       fetchVideoDetails();
+      toast.success('Video Uploaded successfully')
+      redirect('/dashboard')
     } catch (error) {
       console.error("Error approving and uploading video:", error);
     }
@@ -117,11 +120,14 @@ export default function VideoDetailsPage() {
           Approve and Upload to YouTube
         </button>
       )}
+      {video.status === 'approved' && (
+        <button className="bg-green-600 text-white py-2 px-4">Video Uploaded</button>
+      )}
     </div>
     <div className="flex gap-6 px-14">
       {/* Main video and details */}
       <div className="flex-1">
-        <div className="w-full aspect-video">
+        <div className="w-full aspect-video rounded-x">
           <VideoPlayer src={video.cloudinaryId} />
         </div>
         <div className="mt-4">
