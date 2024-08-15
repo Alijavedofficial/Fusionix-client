@@ -143,3 +143,8 @@ body {
     1px -1px 5px rgba(0, 0, 0, 0.1),  /* Right and top shadow */
     -1px 1px 5px rgba(0, 0, 0, 0.1);  /* Left and bottom shadow */
 }
+
+.back{
+  background: linear-gradient(45deg, rgb(13, 13, 18), #0d0d12);
+
+}

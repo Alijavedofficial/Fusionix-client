@@ -1,0 +1,25 @@
+<svg width="294" height="220" viewBox="0 0 294 220" fill="none" xmlns="http://www.w3.org/2000/svg">
+<rect width="294" height="220" fill="white"/>
+<path d="M60.8156 15.7714C61.997 13.9386 64.6771 13.9386 65.8586 15.7714L115.207 92.324C116.494 94.3204 115.061 96.9494 112.685 96.9494H13.9888C11.6136 96.9494 10.1804 94.3204 11.4673 92.324L60.8156 15.7714Z" fill="#7F42FF"/>
+<rect opacity="0.58" x="65.2996" y="53.1548" width="189.735" height="140.857" rx="4" fill="#E9EAF0"/>
+<rect x="53.614" y="41.5435" width="188.841" height="139.857" rx="3.5" fill="white" stroke="#14192B"/>
+<rect x="186.1" y="115.369" width="41.2635" height="13.2239" rx="2" fill="#7F42FF"/>
+<path d="M228.319 140.584L211.607 123.891C211.524 123.808 211.382 123.866 211.382 123.982V147.834L217.385 143.95L220.624 150.251L224.377 148.325L221.326 142.391L228.319 140.584Z" fill="white" stroke="#14192B" stroke-miterlimit="10"/>
+<line x1="53.114" y1="60.4248" x2="242.955" y2="60.4248" stroke="#14192B"/>
+<ellipse cx="69.2319" cy="50.9839" rx="3" ry="2.99657" fill="white" stroke="#14192B"/>
+<ellipse cx="80.2319" cy="50.9839" rx="3" ry="2.99657" fill="white" stroke="#14192B"/>
+<ellipse cx="91.2319" cy="50.9839" rx="3" ry="2.99657" fill="white" stroke="#14192B"/>
+<rect x="68.313" y="75.6509" width="82.5364" height="57.658" fill="white" stroke="#14192B"/>
+<rect x="146.849" y="72.6543" width="7" height="6.99085" fill="white" stroke="#14192B"/>
+<rect x="146.849" y="129.314" width="7" height="6.99085" fill="white" stroke="#14192B"/>
+<rect x="65.313" y="129.548" width="7" height="6.99085" fill="white" stroke="#14192B"/>
+<rect x="65.313" y="72.6543" width="7" height="6.99085" fill="white" stroke="#14192B"/>
+<path d="M68.2996 118.536L93.3383 88.8457L115.788 116.877L132.625 105.96L150.995 122.499" stroke="#14192B"/>
+<ellipse cx="120.602" cy="93.5443" rx="6.07223" ry="6.06528" fill="#7F42FF"/>
+<rect opacity="0.1" x="64.813" y="145.242" width="26.85" height="23.9478" fill="#7F42FF"/>
+<rect opacity="0.3" x="96.1562" y="145.242" width="26.85" height="23.9478" fill="#7F42FF"/>
+<rect x="127.5" y="145.242" width="26.85" height="23.9478" fill="#7F42FF"/>
+<line x1="168.976" y1="75.6494" x2="231.826" y2="75.6494" stroke="#14192B"/>
+<line x1="168.976" y1="85.4707" x2="207.21" y2="85.4707" stroke="#14192B"/>
+<line x1="168.976" y1="96.7241" x2="231.826" y2="96.7241" stroke="#14192B"/>
+</svg>

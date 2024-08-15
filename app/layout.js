@@ -1,8 +1,8 @@
 import { ClerkProvider } from '@clerk/nextjs';
 import './globals.css';
-import { Montserrat} from "next/font/google";
+import { Inter, Montserrat} from "next/font/google";
 
-const Inter = Montserrat({ subsets: ["latin"] });
+const Interr = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: 'Fusionix',
@@ -16,7 +16,7 @@ export default function RootLayout({ children }) {
   return (
     <ClerkProvider  publishableKey={clerkPubKey}>
       <html>
-        <body className={Inter.className}>
+        <body className={Interr.className}>
           <main className="">{children}</main>
         </body>
       </html>
