@@ -127,6 +127,13 @@ body {
   background-repeat: repeat-x;
   padding-right: 0px; /* Adjust this value to control distance from content */
 }
+.pricing-border {
+  background-image: linear-gradient(to right, #374151 33%, transparent 33%);
+  background-position: bottom;
+  background-size: 12px 1px;
+  background-repeat: repeat-x;
+  padding-right: 0px; /* Adjust this value to control distance from content */
+}
 
 .custom-shadow:hover {
   box-shadow: 

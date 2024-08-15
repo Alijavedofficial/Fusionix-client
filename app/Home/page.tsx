@@ -103,7 +103,7 @@ const HomePage: React.FC = () => {
             className="rounded-xl h-[550px]"
           />
         </div>
-        {/* <BackgroundBeams /> */}
+        <BackgroundBeams />
       </section>
 
       <section className="p-20 bg-white shadow-md rounded-xl border border-gray-300 items-start w-full">
@@ -287,12 +287,123 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
+       <section className="flex flex-col gap-10 text-white space-y-8 items-start justify-center flex-1 w-full p-20 back shadow-md rounded-xl border border-gray-300">
+        <div className="flex flex-col gap-4"> 
+          <p className="border  flex gap-2 p-2 px-3 w-24 h-auto  text-sm border-gray-700 rounded-xl items-center bg-[#212529]">
+            <span>
+              <Icon icon="fluent:wallet-credit-card-16-regular" className="" style={{ fontSize: "15px" }} />
+            </span>
+            Pricing
+          </p>
+          <h1 className="text-5xl font-semibold">
+            Simple and Flexible <br></br> Pricing
+          </h1>
+          </div>
+          <div className="flex justify-between w-full">
+             <div className="border border-gray-700 rounded-xl bg-[#212529] flex flex-col justify-between text-sm p-4 px-10">
+             <p className="text-gray-400 text-lg">Starter</p>
+              <div className="pricing-border py-4">  
+              <h1 className="text-4xl font-semibold">$0 <span className="text-[16px] font-normal text-gray-400">per month</span></h1>
+              <p className="text-gray-400 font-light">For inviduals with one youtube channel and 1 editors</p>
+              </div>
+              <h6 className="py-4">This Plan Includes:</h6>
+              <div className="space-y-4 pb-8">
+              <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Auto Upload</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Collaborations</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Permissions</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">1 Workspace</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">1 Editor</p>
+              </div>
+              </div>
+              <button className="px-6 py-2 rounded-xl border border-gray-700 text-lg  bg-[#343a40]">Get started</button>
+             </div>
+
+
+             <div className="border border-gray-700 rounded-xl bg-[#fff] flex flex-col justify-between text-sm p-4 px-10">
+             <p className="text-black text-lg">Personal</p>
+              <div className="pricing-border py-4">  
+              <h1 className="text-4xl font-semibold text-black">$10 <span className="text-[16px] font-normal text-black">per month</span></h1>
+              <p className="text-black font-light">For inviduals with one youtube channel and 1 editors</p>
+              </div>
+
+              <h6 className="py-4 text-black">This Plan Includes:</h6>
+              <div className="space-y-4 pb-8">
+              <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="text-black" style={{ fontSize: "15px" }} />
+                <p className="text-black font-normal">Auto Upload</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="text-black" style={{ fontSize: "15px" }} />
+                <p className="text-black font-normal">Collaborations</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="text-black" style={{ fontSize: "15px" }} />
+                <p className="text-black font-normal">Permissions</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="text-black" style={{ fontSize: "15px" }} />
+                <p className="text-black font-normal">3 Workspace</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="text-black" style={{ fontSize: "15px" }} />
+                <p className="text-black font-normal">5 Editor</p>
+              </div>
+              </div>
+              <button className="px-6 py-2 rounded-xl border border-gray-700 text-lg  bg-[#000]">Get started</button>
+             </div>
+
+
+             <div className="border border-gray-700 rounded-xl bg-[#212529] flex flex-col justify-between text-sm p-4 px-10">
+             <p className="text-gray-400 text-lg">Proffesional</p>
+              <div className="pricing-border py-4">
+              <h1 className="text-4xl font-semibold">$25 <span className="text-[16px] font-normal text-gray-400">per month</span></h1>
+              <p className="text-gray-400 font-light">For inviduals with one youtube channel and 1 editors</p>
+              </div>
+              <h6 className="py-4">This Plan Includes:</h6>
+              <div className="space-y-4 pb-8">
+              <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Auto Upload</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Collaborations</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Permissions</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Unlimited Workspace</p>
+              </div>
+               <div className="flex items-center gap-3">
+                <Icon icon="teenyicons:tick-circle-solid" className="" style={{ fontSize: "15px" }} />
+                <p className="text-gray-400 font-normal">Unlimited Editor</p>
+              </div>
+              </div>
+              <button className="px-6 py-2 rounded-xl border border-gray-700 text-lg bg-[#343a40]">Get started</button>
+             </div>
+          </div>
+      </section>
      
 
       <footer className="flex flex-col text-white space-y-8 w-full p-16 py-12 back shadow-md rounded-xl border border-gray-300">
-      
-
-        <div className="flex w-full gap-20 border-b border-gray-800 pb-6">
+        <div className="flex w-full justify-between border-b border-gray-800 pb-6 px-6">
           <div className="flex flex-col items-start mb-4 mx-4 text-gray-400">
             <h3 className="font-bold text-white pb-5">Fusionix</h3>
             <div className="flex flex-col gap-4">
@@ -325,6 +436,49 @@ const HomePage: React.FC = () => {
               </a>
               <a href="#" className="">
                 Automate{" "}
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-col items-start mb-4 mx-4 text-gray-400">
+            <h3 className="font-bold text-white pb-5">Community</h3>
+            <div className="flex flex-col gap-4">
+              <a href="#" className="">
+                Blogs
+              </a>
+              <a href="#" className="">
+                Articles
+              </a>
+              <a href="#" className="">
+                Help Center
+              </a>
+              <a href="#" className="">
+                News
+              </a>
+            </div>
+          </div>
+          <div className="flex flex-col items-start mb-4 mx-4 text-gray-400">
+            <h3 className="font-bold text-white pb-5">Fusionix for</h3>
+            <div className="flex flex-col gap-4">
+              <a href="#" className="">
+               Commercial
+              </a>
+              
+            </div>
+          </div>
+          <div className="flex flex-col items-start mb-4 mx-4 text-gray-400">
+            <h3 className="font-bold text-white pb-5">Follow Us </h3>
+            <div className="flex flex-col gap-4">
+              <a href="#" className="">
+                Linked In
+              </a>
+              <a href="#" className="">
+                Twitter
+              </a>
+              <a href="#" className="">
+                Instagram
+              </a>
+              <a href="#" className="">
+                Webinar
               </a>
             </div>
           </div>
