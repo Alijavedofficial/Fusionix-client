@@ -8,6 +8,7 @@ export default function UploadVideo(onClose) {
     const { id } = useParams();
     const [isLoading, setIsLoading] = useState(false);
     const [file, setFile] = useState(null);
+    const [thumbnail, setThumbnail] = useState(null)
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
 
@@ -17,6 +18,7 @@ export default function UploadVideo(onClose) {
           e.preventDefault();
           const formData = new FormData();
           formData.append("video", file);
+          formData.append("thumbnail", thumbnail)
           formData.append("title", title);
           formData.append("description", description);
           formData.append("workspaceId", id.toString());
@@ -24,17 +26,22 @@ export default function UploadVideo(onClose) {
           setTitle("");
           setDescription("");
           setFile(null);
+          setThumbnail(null)
+          toast.success('Video Uploaded Successfully!');
         } catch (error) {
           console.error("Error uploading video", error);
         } finally {
           setIsLoading(false);
-          toast.success('Video Uploaded Successfully!');
+          
         }
       };
 
     const handleFileChange = (e) => {
         setFile(e.target.files[0]);
     };
+    const handleImageChange = (e) => {
+      setThumbnail(e.target.files[0]);
+    }
     
     return (
       <form onSubmit={handleSubmit} className="p-2 space-y-4 w-[400px] flex-grow max-sm:w-full">
@@ -106,6 +113,20 @@ export default function UploadVideo(onClose) {
           </div>
         )}
       </div>
+
+      <div className="flex flex-col">
+  <label htmlFor="thumbnail" className="text-gray-800 font-semibold mb-2">
+    Thumbnail
+  </label>
+  <input
+    type="file"
+    id="thumbnail"
+    accept="image/*"
+    onChange={handleImageChange}
+    required
+    className="p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary focus:border-transparent transition duration-200"
+  />
+</div>
     
       <button
         type="submit"

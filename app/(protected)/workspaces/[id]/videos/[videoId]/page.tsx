@@ -127,7 +127,7 @@ export default function VideoDetailsPage() {
     <div className="flex gap-6 px-14">
       {/* Main video and details */}
       <div className="flex-1">
-        <div className="w-full aspect-video rounded-x">
+        <div className="w-full aspect-video rounded-xl">
           <VideoPlayer src={video.cloudinaryId} />
         </div>
         <div className="mt-4">
@@ -141,26 +141,7 @@ export default function VideoDetailsPage() {
           <p className="text-sm text-gray-600 mt-4">{video.description}</p>
         </div>
       </div>
-      
-      {/* Other videos list */}
-      <div className="w-80 lg:w-96">
-        <div className="space-y-3">
-          {otherVideos.map((video) => (
-            <Link href={`/workspaces/${video.workspaceId}/videos/${video._id}`} key={video._id}>
-              <div className="flex space-x-2 cursor-pointer hover:bg-gray-100 p-2 rounded">
-                <div className="w-40 h-24 bg-gray-200 rounded overflow-hidden">
-                  <video src={video.cloudinaryId} className="w-full h-full object-cover" />
-                </div>
-                <div className="flex-1">
-                  <h3 className="text-sm font-semibold line-clamp-2">{video.title}</h3>
-                  <p className="text-xs text-gray-500 mt-1">{video.uploadedBy.name}</p>
-                  <p className="text-xs text-gray-500">Status: {video.status}</p>
-                </div>
-              </div>
-            </Link>
-          ))}
-        </div>
-      </div>
+     
     </div>
   </div>
   );

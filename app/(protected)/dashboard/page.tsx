@@ -230,7 +230,7 @@ export default function Dashboard() {
             
             <div className="grid grid-cols-2 items-center gap-4 py-4">
             
-            {videos.map((video) => (
+            {videos.slice(0, 4).map((video) => (
               <Link href={`workspaces/${video.workspaceId}/videos/${video._id}`}>
             <div className="flex items-center gap-4 bg-white p-3 rounded-lg border border-gray-300 cursor-pointer custom-shadow transition-shadow duration-300">
             <span className="">
