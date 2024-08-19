@@ -160,8 +160,8 @@ export default function Dashboard() {
       </div>
 
 
-       <div className="flex justify-between gap-5 ">
-          <div className="bg-white flex-grow p-2 rounded-md px-4 w-[45%] custom-shadow-container duration-300 transition-shadow">
+       <div className="flex justify-between gap-5 w-[60%]">
+          <div className="bg-white flex-grow p-2 rounded-md px-4 custom-shadow-container duration-300 transition-shadow">
             <div className="flex justify-between items-center custom-dotted-bottomborder py-4">
               <h1 className='font-semibold text-lg'>Workspaces</h1>
               <div className="flex gap-2 items-center">
@@ -211,59 +211,7 @@ export default function Dashboard() {
     </div>
           </div>
 
-          <div className="bg-white flex-grow p-2 rounded-md px-4 w-[55%] custom-shadow-container duration-300 transition-shadow">
-            <div className="flex justify-between items-center custom-dotted-bottomborder py-4">
-              <h1 className='font-semibold text-lg'>Recent Videos</h1>
-              <TooltipProvider>
-              <Tooltip delayDuration={100}>
-                <TooltipTrigger>
-                <button className=" rounded-md p-2 border border-gray-300 custom-shadow">
-                          <Icon icon="ci:expand" style={{ fontSize: "18px" }} />
-              </button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>View All</p>
-                </TooltipContent>
-              </Tooltip>
-             </TooltipProvider>
-            </div>
-            
-            <div className="grid grid-cols-2 items-center gap-4 py-4">
-            
-            {videos.slice(0, 4).map((video) => (
-              <Link href={`workspaces/${video.workspaceId}/videos/${video._id}`}>
-            <div className="flex items-center gap-4 bg-white p-3 rounded-lg border border-gray-300 cursor-pointer custom-shadow transition-shadow duration-300">
-            <span className="">
-            <div className="relative w-12 h-12 bg-blue-100 group">
-                        <video
-                          src={video.cloudinaryId}
-                          className="w-full h-full object-cover rounded-md"
-                        />
-                        <div className="absolute inset-0 flex items-center justify-center bg-black bg-opacity-50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-md">
-                          <Icon
-                            icon="mdi:play"
-                            className="text-red-600"
-                            style={{ fontSize: "34px" }}
-                          />
-                        </div>
-            </div>
-            </span>
-            <div className="flex flex-col  items-start">
-            <span className="font-medium">{video.title}</span>
-            <span className={`text-sm font-medium ${
-                      video.status === "approved"
-                        ? "text-green-400"
-                        : video.status === "rejected"
-                        ? "text-red-400"
-                        : "text-yellow-500"
-                    }`}>{video.status}</span>
-            </div>
-            </div>
-            </Link>
-              ))}
-          </div>
-          </div>
-       </div>
+         </div>
 
        <Modal isOpen={isModalOpen} onClose={closeModal}>
           <CreateSpace onClose={closeModal} fetchworkspaces={fetchWorkspaces} />

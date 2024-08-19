@@ -12,12 +12,14 @@ import Modal from "../../../../components/Modal";
 import UploadVideo from "../../../../components/UploadVideo";
 import { Icon } from "@iconify/react";
 import DeleteWorkspaceModal from "../../../../components/DeleteConfirmation";
+import UpdateSpace from "../../../../components/UpdateSpace";
 import Image from "next/image";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/PopOver";
+import { headers } from "next/headers";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -27,6 +29,8 @@ export default function WorkspaceDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
+  const [isUpdateModelOpen, setIsUpdateModelOpen] = useState(false)
+  const [updatedWorkspaceName, setupdatedWorkspaceName] = useState('')
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -34,6 +38,9 @@ export default function WorkspaceDetail() {
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
   const openEditorModal = () => setIsEditorModalOpen(true);
   const closeEditorModal = () => setIsEditorModalOpen(false);
+  const openUpdateModel = () => setIsUpdateModelOpen(true)
+  const closeUpdateModel = () => setIsUpdateModelOpen(false)
+  
 
   const { user } = useUser();
   const { getToken } = useAuth();
@@ -61,6 +68,24 @@ export default function WorkspaceDetail() {
     }
   };
 
+  const UpdateWorkspace = async () => {
+    try {
+        const token = await getToken()
+        await api.patch(`workspace/${id}`,
+            {
+              name: updatedWorkspaceName
+            } , {
+        headers: {  
+          Authorization: `Bearer ${token}`,
+        },
+        })
+    }  catch (error) {
+        console.error("Error Updating workspace:", error);
+      } finally {
+        toast.success('Workspace Updated successfully!')
+      }
+}
+
   const DeleteWorkspace = async () => {
     try {
       const token = await getToken();
@@ -77,12 +102,7 @@ export default function WorkspaceDetail() {
     }
   };
 
-  const UpdateWorkspace = async () => {
-    try {
-    } catch (error) {
-      toast.error("Failed to Update workspace.");
-    }
-  };
+ 
 
   const handleInviteSent = () => {
     fetchWorkspaceDetails();
@@ -143,7 +163,7 @@ export default function WorkspaceDetail() {
                 </p>
                 <div className="flex flex-col space-y-1 p-1">
                   <button
-                    onClick={UpdateWorkspace}
+                    onClick={openUpdateModel}
                     className="flex items-center justify-between space-x-2 px-3 py-2 text-sm text-gray-700 hover:bg-green-100 hover:text-green-600 rounded-md transition-colors duration-200 font-medium"
                   >
                     <span>Update</span>
@@ -214,6 +234,21 @@ export default function WorkspaceDetail() {
 
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <UploadVideo onClose={closeModal} />
+      </Modal>
+      <Modal isOpen={isUpdateModelOpen} onClose={closeUpdateModel}>
+      <form onSubmit={UpdateWorkspace} className="flex flex-col space-y-4 w-[300px] max-sm:w-full">
+    <h1 className='text-2xl font-bold text-gray-900'>Update Workspace</h1>
+  <input
+    type="text"
+    value={updatedWorkspaceName}
+    onChange={(e) => setupdatedWorkspaceName(e.target.value)}
+    placeholder="Workspace Name"
+    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+  />
+  <button type="submit" className="bg-primary text-white p-2 rounded">
+    Update Workspace
+  </button>
+</form> 
       </Modal>
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
         <DeleteWorkspaceModal
