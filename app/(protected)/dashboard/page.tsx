@@ -106,7 +106,7 @@ export default function Dashboard() {
     <div className="flex flex-col justify-betweem gap-10 p-2">
       <div className="flex items-center flex-grow rounded-lg border border-gray-300 p-4">
         <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
-        <div className="bg-blue-100 p-3 rounded-lg">
+        <div className="bg-purple-100 p-3 rounded-lg">
               <Icon
                 icon="ph:briefcase-light"
                 className="text-primary"
@@ -119,7 +119,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
-        <div className="bg-blue-100 p-3 rounded-lg">
+        <div className="bg-purple-100 p-3 rounded-lg">
               <Icon
                 icon="mage:users"
                 className="text-primary"
@@ -132,7 +132,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex px-4 py-2 gap-8 flex-grow custom-dotted-border">
-        <div className="bg-blue-100 p-3 rounded-lg">
+        <div className="bg-purple-100 p-3 rounded-lg">
               <Icon
                 icon="mdi:approve"
                 className="text-primary"
@@ -145,7 +145,7 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex px-4 py-2 gap-8 flex-grow">
-        <div className="bg-blue-100 p-3 rounded-lg">
+        <div className="bg-purple-100 p-3 rounded-lg">
               <Icon
                 icon="material-symbols-light:pending-actions-rounded"
                 className="text-primary"

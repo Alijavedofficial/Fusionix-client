@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react';
-import api from '../utils/api';
+import React, { useState, useEffect } from "react";
+import api from "../utils/api";
+import { Icon } from "@iconify/react";
 
 const YouTubeConnect: React.FC = () => {
   const [isConnected, setIsConnected] = useState<boolean | null>(null);
@@ -10,20 +11,20 @@ const YouTubeConnect: React.FC = () => {
 
   const checkYouTubeConnection = async () => {
     try {
-      const response = await api.get('/video/youtube/connection-status');
+      const response = await api.get("/video/youtube/connection-status");
       setIsConnected(response.data.isConnected);
     } catch (error) {
-      console.error('Error checking YouTube connection:', error);
+      console.error("Error checking YouTube connection:", error);
       setIsConnected(false);
     }
   };
 
   const handleConnect = async () => {
     try {
-      const response = await api.get('/video/youtube/auth');
+      const response = await api.get("/video/youtube/auth");
       window.location.href = response.data.authUrl;
     } catch (error) {
-      console.error('Error connecting to YouTube:', error);
+      console.error("Error connecting to YouTube:", error);
     }
   };
 
@@ -32,12 +33,16 @@ const YouTubeConnect: React.FC = () => {
   }
 
   if (isConnected) {
-    return null
+    return null;
   }
 
   return (
-    <button onClick={handleConnect} className="bg-red-600 text-white px-4 py-2 rounded">
-      Connect YouTube Account
+    <button
+      onClick={handleConnect}
+      className="border border-red-600 text-red-600 bg-red-100 px-4 py-2 rounded-lg shadow-lg flex items-center gap-2"
+    >
+      <Icon icon="bi:youtube" className="text-lg" />
+      Connect Account
     </button>
   );
 };

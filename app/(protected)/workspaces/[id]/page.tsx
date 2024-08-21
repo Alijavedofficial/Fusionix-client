@@ -29,8 +29,8 @@ export default function WorkspaceDetail() {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditorModalOpen, setIsEditorModalOpen] = useState(false);
-  const [isUpdateModelOpen, setIsUpdateModelOpen] = useState(false)
-  const [updatedWorkspaceName, setupdatedWorkspaceName] = useState('')
+  const [isUpdateModelOpen, setIsUpdateModelOpen] = useState(false);
+  const [updatedWorkspaceName, setupdatedWorkspaceName] = useState("");
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
@@ -38,9 +38,8 @@ export default function WorkspaceDetail() {
   const closeDeleteModal = () => setIsDeleteModalOpen(false);
   const openEditorModal = () => setIsEditorModalOpen(true);
   const closeEditorModal = () => setIsEditorModalOpen(false);
-  const openUpdateModel = () => setIsUpdateModelOpen(true)
-  const closeUpdateModel = () => setIsUpdateModelOpen(false)
-  
+  const openUpdateModel = () => setIsUpdateModelOpen(true);
+  const closeUpdateModel = () => setIsUpdateModelOpen(false);
 
   const { user } = useUser();
   const { getToken } = useAuth();
@@ -70,21 +69,24 @@ export default function WorkspaceDetail() {
 
   const UpdateWorkspace = async () => {
     try {
-        const token = await getToken()
-        await api.patch(`workspace/${id}`,
-            {
-              name: updatedWorkspaceName
-            } , {
-        headers: {  
-          Authorization: `Bearer ${token}`,
+      const token = await getToken();
+      await api.patch(
+        `workspace/${id}`,
+        {
+          name: updatedWorkspaceName,
         },
-        })
-    }  catch (error) {
-        console.error("Error Updating workspace:", error);
-      } finally {
-        toast.success('Workspace Updated successfully!')
-      }
-}
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+    } catch (error) {
+      console.error("Error Updating workspace:", error);
+    } finally {
+      toast.success("Workspace Updated successfully!");
+    }
+  };
 
   const DeleteWorkspace = async () => {
     try {
@@ -101,8 +103,6 @@ export default function WorkspaceDetail() {
       toast.error("Failed to delete workspace.");
     }
   };
-
- 
 
   const handleInviteSent = () => {
     fetchWorkspaceDetails();
@@ -146,7 +146,7 @@ export default function WorkspaceDetail() {
           {workspace.name}
         </h1>
         {workspace.owner.userId === user.id && (
-          <div className="flex items-center gap-4">     
+          <div className="flex items-center gap-4">
             <Popover>
               <PopoverTrigger>
                 <button className="hover:bg-gray-300 rounded-md p-2">
@@ -187,14 +187,21 @@ export default function WorkspaceDetail() {
       </div>
 
       <div className="bg-blue-100 text-primary p-3 space-y-4 rounded-md">
-          <h1 className='font-semibold text-xl'>Add Editor to your workspace now!</h1>
-          <p className="text-[15px]">Empower your team by adding an editor who can seamlessly upload videos for your review. Once approved, the content can be effortlessly published directly to YouTube, ensuring a smooth and efficient workflow from creation to upload.</p>
-          <button 
-              onClick={openEditorModal} 
-              className="bg-primary hover:bg-opacity-80 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
-            >
-              Add Editor
-            </button>
+        <h1 className="font-semibold text-xl">
+          Add Editor to your workspace now!
+        </h1>
+        <p className="text-[15px]">
+          Empower your team by adding an editor who can seamlessly upload videos
+          for your review. Once approved, the content can be effortlessly
+          published directly to YouTube, ensuring a smooth and efficient
+          workflow from creation to upload.
+        </p>
+        <button
+          onClick={openEditorModal}
+          className="bg-primary hover:bg-opacity-80 text-white font-medium py-2 px-4 rounded-lg shadow-md transition-colors"
+        >
+          Add Editor
+        </button>
       </div>
 
       <button onClick={openModal} className="w-[350px]">
@@ -235,21 +242,26 @@ export default function WorkspaceDetail() {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <UploadVideo onClose={closeModal} />
       </Modal>
+
       <Modal isOpen={isUpdateModelOpen} onClose={closeUpdateModel}>
-      <form onSubmit={UpdateWorkspace} className="flex flex-col space-y-4 w-[300px] max-sm:w-full">
-    <h1 className='text-2xl font-bold text-gray-900'>Update Workspace</h1>
-  <input
-    type="text"
-    value={updatedWorkspaceName}
-    onChange={(e) => setupdatedWorkspaceName(e.target.value)}
-    placeholder="Workspace Name"
-    className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
-  />
-  <button type="submit" className="bg-primary text-white p-2 rounded">
-    Update Workspace
-  </button>
-</form> 
+        <form
+          onSubmit={UpdateWorkspace}
+          className="flex flex-col space-y-4 w-[300px] max-sm:w-full"
+        >
+          <h1 className="text-2xl font-bold text-gray-900">Update Workspace</h1>
+          <input
+            type="text"
+            value={updatedWorkspaceName}
+            onChange={(e) => setupdatedWorkspaceName(e.target.value)}
+            placeholder="Workspace Name"
+            className="px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
+          />
+          <button type="submit" className="bg-primary text-white p-2 rounded">
+            Update Workspace
+          </button>
+        </form>
       </Modal>
+
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
         <DeleteWorkspaceModal
           onDelete={DeleteWorkspace}
@@ -258,7 +270,11 @@ export default function WorkspaceDetail() {
         />
       </Modal>
       <Modal isOpen={isEditorModalOpen} onClose={closeEditorModal}>
-        <InviteEditorForm workspaceId={id} onInviteSent={handleInviteSent} onCancel={closeEditorModal}/>
+        <InviteEditorForm
+          workspaceId={id}
+          onInviteSent={handleInviteSent}
+          onCancel={closeEditorModal}
+        />
       </Modal>
 
       {workspace.owner.userId === user.id && (

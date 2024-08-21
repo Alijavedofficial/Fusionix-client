@@ -8,7 +8,7 @@ export default function Navigation({ isOpen, setIsOpen }) {
   const { user } = useUser()
 
   return (
-    <nav className="bg-white z-10 text-black p-4 fixed top-0 left-0 right-0 border-b border-gray-100 shadow-sm">
+    <nav className="bg-white z-10 text-black p-4 fixed top-0 left-0 right-0 border-b border-gray-100">
       <div className="flex justify-between items-center">
         <div className='flex items-center justify-center gap-10'>
       {!isOpen ? (

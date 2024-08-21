@@ -9,6 +9,8 @@ import YouTubeConnect from "../../../../../../components/youtubeConnect";
 import VideoPlayer from "../../../../../../components/youtubePlayer";
 import Link from "next/link";
 import { toast } from "react-toastify";
+import Loader from "../../../../../../components/Loader";
+import { Icon } from "@iconify/react";
 
 interface Video {
   _id: string;
@@ -88,15 +90,7 @@ export default function VideoDetailsPage() {
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center">
-      <div className="loading">
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
-      </div>
+      <Loader />
     );
   }
 
@@ -109,40 +103,48 @@ export default function VideoDetailsPage() {
   }
 
   return (
-    <div className="px-4">
-    <div className="p-4 flex justify-end items-center gap-2">
-      <YouTubeConnect />
-      {video.status === "pending" && (
-        <button
-          onClick={approveAndUploadVideo}
-          className="bg-red-600 text-white px-6 py-2 rounded-lg shadow-lg hover:bg-red-700 transition-colors"
-        >
-          Approve and Upload to YouTube
-        </button>
-      )}
-      {video.status === 'approved' && (
-        <button className="bg-green-600 text-white py-2 px-4">Video Uploaded</button>
-      )}
-    </div>
-    <div className="flex gap-6 px-14">
-      {/* Main video and details */}
-      <div className="flex-1">
-        <div className="w-full aspect-video rounded-xl">
+    <div className="container mx-auto px-4 py-6">
+  {/* Header and Actions */}
+  <div className="flex justify-end items-center mb-6 gap-5">
+    <YouTubeConnect />
+    {video.status === "pending" ? (
+      <button
+        onClick={approveAndUploadVideo}
+        className="border border-primary text-primary bg-purple-100  px-4 py-2 rounded-lg shadow-lg hover:bg-opacity-80 transition-all flex gap-2 items-center"
+      >
+        <Icon icon="mdi:approve" className="text-lg" />
+        Approve & Upload
+      </button>
+    ) : (
+      <button className="bg-green-600 text-white py-2 px-4 rounded-lg">
+        Video Uploaded
+      </button>
+    )}
+  </div>
+
+  <div className="flex flex-col md:flex-row gap-8">
+    {/* Main Video Section */}
+    <div className="flex-1">
+      <div className="relative pb-[56.25%] overflow-hidden rounded-xl shadow-lg">
+        <div className="absolute inset-0 h-screen">
           <VideoPlayer src={video.cloudinaryId} />
         </div>
-        <div className="mt-4">
-          <h1 className="text-xl font-bold">{video.title}</h1>
-          <div className="flex items-center gap-4 my-2">
-            <p className="text-sm text-gray-500">{video.uploadedBy.name}</p>
-            <p className="text-sm text-gray-500">
-              <FormatDate isoString={video.createdAt} />
-            </p>
-          </div>
-          <p className="text-sm text-gray-600 mt-4">{video.description}</p>
-        </div>
       </div>
-     
+      <div className="mt-4">
+        <h1 className="text-2xl font-bold text-gray-900">{video.title}</h1>
+        <div className="flex items-center gap-4 my-2">
+          <p className="text-sm text-gray-500">{video.uploadedBy.name}</p>
+          <p className="text-sm text-gray-500">
+            <FormatDate isoString={video.createdAt} />
+          </p>
+        </div>
+        <p className="text-sm text-gray-700 mt-4 leading-relaxed">
+          {video.description}
+        </p>
+      </div>
     </div>
   </div>
+</div>
+
   );
 }
