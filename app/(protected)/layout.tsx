@@ -3,14 +3,15 @@ import { ToastContainer } from 'react-toastify';
 import Navigation from '../../components/Navigation';
 import Sidebar from '../../components/sidebar'; 
 import { useState } from 'react';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
-
+const queryClient = new QueryClient()
 export default function Layout({ children }: { children: React.ReactNode }) {
   const [isOpen, setIsOpen] = useState(false);
   
 
   return (
-    
+    <QueryClientProvider client={queryClient}>
       <div className="flex flex-col min-h-screen">
         <Navigation setIsOpen={setIsOpen} isOpen={isOpen} />
         <ToastContainer />
@@ -21,5 +22,6 @@ export default function Layout({ children }: { children: React.ReactNode }) {
           </div>
         </div>
       </div>
+      </QueryClientProvider>
   );
 }

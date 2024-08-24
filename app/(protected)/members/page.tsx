@@ -1,13 +1,9 @@
 'use client';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
+import { Member } from '../../../Types';
 
-interface Member {
-  id: string;
-  name: string;
-  email: string;
-  role: 'owner' | 'editor';
-}
+
 
 const members: Member[] = [
   { id: '1', name: 'Owner Name', email: 'owner@example.com', role: 'owner' },
