@@ -7,7 +7,7 @@ import { FormData, InviteEditorFormProps } from "../Types";
 
 
 
-export default function InviteEditorForm({workspaceId, onInviteSent, onCancel}: InviteEditorFormProps) {
+export default function InviteEditorForm({workspaceId, onCancel}: InviteEditorFormProps) {
   const [isLoading, setIsLoading] = useState(false);
   const {register,handleSubmit, formState: { errors }, reset} = useForm<FormData>();
 
@@ -20,7 +20,6 @@ export default function InviteEditorForm({workspaceId, onInviteSent, onCancel}: 
       });
       reset()
       toast.success("Email Sent Successfully!");
-      onInviteSent();
     } catch (err: any) {
       console.error("Error Inviting Editor", err);
       toast.error("Failed to invite Editor");

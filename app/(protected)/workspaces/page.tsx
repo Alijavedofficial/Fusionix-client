@@ -1,56 +1,55 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
-import api from "../../../utils/api";
 import { useAuth } from "@clerk/nextjs";
+import { useQuery } from "@tanstack/react-query";
+import Link from "next/link";
+import { useState } from "react";
+import { toast } from "react-toastify";
+import { Workspace } from "../../../Types";
+import Loader from "../../../components/Loader";
 import FormatDate from "../../../helpers/DateFormatter";
+import api from "../../../utils/api";
 
 export default function Workspaces() {
-  const [workspaces, setWorkspaces] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchTerm, setSearchTerm] = useState("");
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    const init = async () => {
-      await fetchWorkspaces();
-    };
-    init();
-  }, []);
-
-  const fetchWorkspaces = async () => {
-    setIsLoading(true);
-    try {
+  const {
+    data: workspaces,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["workspaces"],
+    queryFn: async () => {
       const token = await getToken();
-      const response = await api.get("/workspace", {
+      const response = await api.get<Workspace[]>("/workspace", {
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       });
-      setWorkspaces(response.data);
-    } catch (error) {
-      console.error("Error fetching workspaces:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      return response.data;
+    },
+  });
 
-  const filteredWorkspaces = workspaces.filter(workspace =>
-    workspace.name.toLowerCase().includes(searchTerm.toLowerCase())
-  );
+  // const filteredWorkspaces = workspaces.filter(workspace =>
+  //   workspace.name.toLowerCase().includes(searchTerm.toLowerCase())
+  // );
+
+  if (error) {
+    toast.error("Error fetching workspaces");
+  }
+
+  if (isLoading) {
+    return <Loader />;
+  }
 
   const renderWorkspaces = () => {
-    return filteredWorkspaces.map((workspace) => (
+    return workspaces.map((workspace) => (
       <Link key={workspace._id} href={`/workspaces/${workspace._id}`}>
-        <li
-          className="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg mb-4 hover:bg-gray-50 transition-transform transform hover:scale-105"
-        >
-          <h3 className="text-xl font-semibold text-primary hover:underline">{workspace.name}</h3>
-          <p className="text-sm text-gray-800 mt-2">
-            <span className="font-semibold text-gray-900">Description:</span>{" "}
-            {workspace.description}
-          </p>
+        <li className="relative p-6 bg-white border border-gray-300 rounded-lg shadow-lg mb-4 hover:bg-gray-50 transition-transform transform hover:scale-105">
+          <h3 className="text-xl font-semibold text-primary hover:underline">
+            {workspace.name}
+          </h3>
           <p className="text-sm text-gray-800 mt-1">
             <span className="font-semibold text-gray-900">Creator:</span>{" "}
             {workspace.owner.name}
@@ -81,19 +80,7 @@ export default function Workspaces() {
         />
       </header>
 
-      {isLoading ? (
-        <div className="flex justify-center items-center">
-        <div className="loading">
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-          <span></span>
-        </div>
-        </div>
-      ) : (
-        <ul>{renderWorkspaces()}</ul>
-      )}
+      <ul>{renderWorkspaces()}</ul>
     </div>
   );
 }

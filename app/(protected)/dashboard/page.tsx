@@ -1,8 +1,9 @@
 "use client";
 import { useAuth } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import CreateSpace from "../../../components/createSpace";
@@ -14,9 +15,8 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from "../../../components/ui/ToolTip";
-import api from "../../../utils/api";
 import { Workspace } from "../../../Types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import api from "../../../utils/api";
 
 export default function Dashboard() {
   const { getToken } = useAuth();

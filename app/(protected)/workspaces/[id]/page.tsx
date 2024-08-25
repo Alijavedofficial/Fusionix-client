@@ -1,30 +1,28 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { useParams, useRouter } from "next/navigation";
-import api from "../../../../utils/api";
-import InviteEditorForm from "../../../../components/InviteEditorForm";
-import { useUser, useAuth } from "@clerk/nextjs";
+import { useAuth, useUser } from "@clerk/nextjs";
+import { Icon } from "@iconify/react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import Image from "next/image";
 import Link from "next/link";
+import { useParams, useRouter } from "next/navigation";
+import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Modal from "../../../../components/Modal";
-import UploadVideo from "../../../../components/UploadVideo";
-import { Icon } from "@iconify/react";
 import DeleteWorkspaceModal from "../../../../components/DeleteConfirmation";
-import UpdateSpace from "../../../../components/UpdateSpace";
-import Image from "next/image";
+import InviteEditorForm from "../../../../components/InviteEditorForm";
+import Loader from "../../../../components/Loader";
+import Modal from "../../../../components/Modal";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/PopOver";
-import { headers } from "next/headers";
+import UploadVideo from "../../../../components/UploadVideo";
+import api from "../../../../utils/api";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
-  const [workspace, setWorkspace] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -39,80 +37,77 @@ export default function WorkspaceDetail() {
   const openEditorModal = () => setIsEditorModalOpen(true);
   const closeEditorModal = () => setIsEditorModalOpen(false);
   const openUpdateModel = () => setIsUpdateModelOpen(true);
-  const closeUpdateModel = () => setIsUpdateModelOpen(false);
+  const closeUpdateModel = () => setIsUpdateModelOpen(false);  
+  const queryClient = useQueryClient()
 
   const { user } = useUser();
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    if (id && getToken) {
-      fetchWorkspaceDetails();
-    }
-  }, [id, getToken]);
-
-  const fetchWorkspaceDetails = async () => {
-    try {
-      setIsLoading(true);
+  const {data: workspace, isLoading, error} = useQuery({
+    queryKey: ["workspace"],
+    queryFn: async () => {
       const token = await getToken();
       const response = await api.get(`/workspace/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setWorkspace(response.data);
-    } catch (error) {
-      console.error("Error fetching workspace details:", error);
-    } finally {
-      setIsLoading(false);
+      return response.data
     }
-  };
+  })
 
-  const UpdateWorkspace = async () => {
-    try {
+  const updateWorkspaceMutation = useMutation({
+    mutationFn: async ({ name }: any) => {
       const token = await getToken();
-      await api.patch(
+      const response = await api.patch(
         `workspace/${id}`,
-        {
-          name: updatedWorkspaceName,
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
+        { name },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-    } catch (error) {
-      console.error("Error Updating workspace:", error);
-    } finally {
-      toast.success("Workspace Updated successfully!");
+      return response.data;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["workspace", id]});
+      toast.success("Workspace updated successfully!");
+    },
+    onError: (error) => {
+      console.error("Error updating workspace:", error);
+      toast.error("Failed to update workspace.");
     }
+  });
+  
+  const UpdateWorkspace = async () => {
+    updateWorkspaceMutation.mutate({ name: updatedWorkspaceName });
   };
 
-  const DeleteWorkspace = async () => {
-    try {
+
+  const deleteWorkspaceMutation = useMutation({
+    mutationFn: async () => {
       const token = await getToken();
       await api.delete(`workspace/${id}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
-      });
+      })
+    }, 
+    onSuccess: () => {
       toast.success("Workspace deleted successfully!");
       router.push("/workspaces");
-    } catch (error) {
-      console.error("Error deleting workspace", error);
+    },
+    onError: (error) => {
+      console.error("Error deleting workspace:", error);
       toast.error("Failed to delete workspace.");
     }
-  };
+   }
+  )
 
-  const handleInviteSent = () => {
-    fetchWorkspaceDetails();
+  const DeleteWorkspace = async () => {
+    deleteWorkspaceMutation.mutate();
   };
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-screen">
-        <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-primary border-solid"></div>
-      </div>
+     <Loader />
     );
   }
 
@@ -272,7 +267,6 @@ export default function WorkspaceDetail() {
       <Modal isOpen={isEditorModalOpen} onClose={closeEditorModal}>
         <InviteEditorForm
           workspaceId={id}
-          onInviteSent={handleInviteSent}
           onCancel={closeEditorModal}
         />
       </Modal>

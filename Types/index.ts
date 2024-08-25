@@ -30,7 +30,6 @@ export interface CreateWorkspaceFormdata {
 
 export interface InviteEditorFormProps {
   workspaceId: any;
-  onInviteSent: () => void;
   onCancel: () => void;
 }
 
