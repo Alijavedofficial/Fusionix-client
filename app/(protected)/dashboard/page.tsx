@@ -174,9 +174,6 @@ export default function Dashboard() {
       <Modal isOpen={isModalOpen} onClose={closeModal}>
         <CreateSpace
           onClose={closeModal}
-          onWorkspaceCreated={() =>
-            queryClient.invalidateQueries({ queryKey: ["workspaces"] })
-          }
         />
       </Modal>
     </div>

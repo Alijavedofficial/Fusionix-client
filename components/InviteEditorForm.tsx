@@ -3,36 +3,46 @@ import React, { useState } from "react";
 import api from "../utils/api";
 import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from "react-hook-form";
-import { FormData, InviteEditorFormProps } from "../Types";
+import { InviteEditor, InviteEditorFormProps } from "../Types";
+import { useMutation } from "@tanstack/react-query";
 
+export default function InviteEditorForm({
+  workspaceId,
+  onCancel,
+}: InviteEditorFormProps) {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<InviteEditor>();
 
-
-export default function InviteEditorForm({workspaceId, onCancel}: InviteEditorFormProps) {
-  const [isLoading, setIsLoading] = useState(false);
-  const {register,handleSubmit, formState: { errors }, reset} = useForm<FormData>();
-
-  const AddEditor:SubmitHandler<FormData> = async (data) => {
-    setIsLoading(true);
-    try {
+   // Mutation to handle the editor invitation
+  const AddEditorMutation = useMutation({
+    mutationFn: async (data: InviteEditor) => {
       await api.post("/workspace/invite-editor", {
         workspaceId,
         editorEmail: data.email,
       });
-      reset()
+    },
+    onSuccess: () => {
       toast.success("Email Sent Successfully!");
-    } catch (err: any) {
-      console.error("Error Inviting Editor", err);
-      toast.error("Failed to invite Editor");
-    } finally {
-      setIsLoading(false);
-      onCancel()
-    }
+      onCancel();
+    },
+    onError: () => {
+      toast.error("Error sending Email");
+    },
+  });
+
+  // Handler for mutation Trigger
+  const AddEditor = (data: InviteEditor) => {
+    AddEditorMutation.mutate(data);
   };
 
   return (
     <form
       onSubmit={handleSubmit(AddEditor)}
-      className="space-y-6 w-[300px] max-sm:w-full">
+      className="space-y-6 w-[300px] max-sm:w-full"
+    >
       <h2 className="text-2xl font-bold text-gray-900 mb-6">Add Editor</h2>
       <div className="bg-blue-100 text-primary p-2 rounded-md text-sm">
         <p>
@@ -48,7 +58,7 @@ export default function InviteEditorForm({workspaceId, onCancel}: InviteEditorFo
           type="email"
           id="email"
           {...register("email", {
-            required: "Email is required",
+            required: "Editor's email is required",
             pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" },
           })}
           placeholder="Enter editor's email"
@@ -73,13 +83,15 @@ export default function InviteEditorForm({workspaceId, onCancel}: InviteEditorFo
         <button
           type="submit"
           className={`w-full py-2 font-semibold rounded-md ${
-            isLoading
+            AddEditorMutation.isPending
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-primary hover:bg-opacity-80"
           } text-white transition duration-200`}
-          disabled={isLoading}
+          disabled={AddEditorMutation.isPending}
         >
-          {isLoading ? "Sending Invitation..." : "Invite Editor"}
+          {AddEditorMutation.isPending
+            ? "Sending Invitation..."
+            : "Invite Editor"}
         </button>
       </div>
     </form>

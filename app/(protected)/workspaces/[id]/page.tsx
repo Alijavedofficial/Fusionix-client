@@ -20,6 +20,7 @@ import {
 } from "../../../../components/ui/PopOver";
 import UploadVideo from "../../../../components/UploadVideo";
 import api from "../../../../utils/api";
+import Videos from "../../../../components/Videos";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -273,11 +274,12 @@ export default function WorkspaceDetail() {
 
       {workspace.owner.userId === user.id && (
         <div className="mt-8">
-          <Link href={`/workspaces/${id}/videos`}>
+          {/* <Link href={`/workspaces/${id}/videos`}>
             <p className="inline-block bg-primary hover:bg-opacity-80 text-white font-bold py-2 px-4 rounded-lg transition-colors">
               View Videos
             </p>
-          </Link>
+          </Link> */}
+          <Videos />
         </div>
       )}
     </div>

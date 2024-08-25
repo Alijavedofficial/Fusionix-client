@@ -33,6 +33,6 @@ export interface InviteEditorFormProps {
   onCancel: () => void;
 }
 
-export interface FormData {
+export interface InviteEditor {
   email: string;
 }
