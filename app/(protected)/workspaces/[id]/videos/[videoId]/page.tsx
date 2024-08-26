@@ -1,16 +1,16 @@
 "use client";
 
-import api from "../../../../../../utils/api";
-import { redirect, useParams } from "next/navigation";
 import { useAuth } from "@clerk/nextjs";
-import { useState, useEffect } from "react";
-import FormatDate from "../../../../../../helpers/DateFormatter";
-import YouTubeConnect from "../../../../../../components/youtubeConnect";
-import VideoPlayer from "../../../../../../components/youtubePlayer";
-import Link from "next/link";
+import { Icon } from "@iconify/react";
+import { redirect, useParams } from "next/navigation";
+import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import Loader from "../../../../../../components/Loader";
-import { Icon } from "@iconify/react";
+import YouTubeConnect from "../../../../../../components/youtubeConnect";
+import VideoPlayer from "../../../../../../components/youtubePlayer";
+import FormatDate from "../../../../../../helpers/DateFormatter";
+import api from "../../../../../../utils/api";
+import { useQuery } from "@tanstack/react-query";
 
 interface Video {
   _id: string;
@@ -29,48 +29,44 @@ interface Video {
 
 export default function VideoDetailsPage() {
   const { videoId } = useParams();
-  const [video, setVideo] = useState<Video | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
-  const [otherVideos, setOtherVideos] = useState([]);
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    if (videoId && getToken) {
-      fetchVideos()
-      fetchVideoDetails();
-    }
-  }, [videoId, getToken]);
-  
-  const fetchVideoDetails = async () => {
-    try {
-      setIsLoading(true);
+  const {data: video, isLoading, error} = useQuery({
+    queryKey: ["video", videoId],
+    queryFn: async () => {
       const token = await getToken();
-      const response = await api.get(`/video/${videoId}`, {
+      const response = await api.get<Video>(`/video/${videoId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       });
-      setVideo(response.data);
-    } catch (error) {
-      console.error("Error fetching video details:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+      return response.data;
+    },
+})
 
-  const fetchVideos = async () => {
-    try {
-      const token = await getToken();
-      const response = await api.get("/video/getAllVideos", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-      setOtherVideos(response.data);
-    } catch (error) {
-      console.error("Error fetching Videos");
-    }
-  };
+if (error) {
+  toast.error("Error fetching Video Details");
+}
+
+if (isLoading) {
+  return <Loader />
+}
+  // const fetchVideoDetails = async () => {
+  //   try {
+  //     setIsLoading(true);
+  //     const token = await getToken();
+  //     const response = await api.get(`/video/${videoId}`, {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     });
+  //     setVideo(response.data);
+  //   } catch (error) {
+  //     console.error("Error fetching video details:", error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
 
   const approveAndUploadVideo = async () => {
     try {
@@ -80,7 +76,6 @@ export default function VideoDetailsPage() {
           Authorization: `Bearer ${token}`,
         },
       });
-      fetchVideoDetails();
       toast.success('Video Uploaded successfully')
       redirect('/dashboard')
     } catch (error) {
@@ -116,14 +111,14 @@ export default function VideoDetailsPage() {
         Approve & Upload
       </button>
     ) : (
-      <button className="bg-green-600 text-white py-2 px-4 rounded-lg">
+      <button className=" text-green-600 py-2 px-4 rounded-lg">
         Video Uploaded
       </button>
     )}
   </div>
 
   <div className="flex flex-col md:flex-row gap-8">
-    {/* Main Video Section */}
+    {/* Video Section */}
     <div className="flex-1">
       <div className="relative pb-[56.25%] overflow-hidden rounded-xl shadow-lg">
         <div className="absolute inset-0 h-screen">

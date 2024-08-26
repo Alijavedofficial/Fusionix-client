@@ -5,38 +5,26 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import api from "../utils/api";
+import { useQuery } from "@tanstack/react-query";
 
 export default function Videos() {
   const { id } = useParams();
   const [videos, setVideos] = useState([]);
-  const [workspace, setWorkspace] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const { getToken } = useAuth();
 
-  useEffect(() => {
-    if (id && getToken) {
-      fetchVideosAndWorkspace();
-    }
-  }, [id, getToken]);
-
-  const fetchVideosAndWorkspace = async () => {
-    try {
-      setIsLoading(true);
+  useQuery({
+     queryKey: ["VideoDetails"],
+     queryFn: async () => {
       const token = await getToken();
       const response = await api.get(`/video/workspace/${id}`, {
         headers: {
           Authorization: `Bearer ${token}` ,
         }
       })
-      setVideos(response.data);
-    } catch (error) {
-      console.error("Error fetching data:", error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  
+      setVideos(response.data)
+     }
+  }
+  )
 
   return (
     <div className="container mx-auto px-4 py-8">

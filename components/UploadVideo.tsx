@@ -4,6 +4,7 @@ import { useParams } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useQueryClient } from "@tanstack/react-query";
 
 interface UploadVideoProps {
   onClose: () => void;
@@ -24,10 +25,9 @@ export default function UploadVideo({onClose}: UploadVideoProps) {
       register,
       handleSubmit,
       formState: { errors },
-      reset,
-      setValue, 
-      watch,
+      reset
     } = useForm();
+    const queryClient = useQueryClient();
 
     const UploadVideo:SubmitHandler<FormData> = async (data) => {
         try {
@@ -44,6 +44,8 @@ export default function UploadVideo({onClose}: UploadVideoProps) {
       reset();
       toast.success('Video Uploaded Successfully!');
       onClose();
+      queryClient.invalidateQueries({queryKey: ['VideoDetails']})
+
         } catch (error) {
           console.error("Error uploading video", error);
           toast.error('Failed to upload video');

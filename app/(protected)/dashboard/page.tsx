@@ -1,7 +1,7 @@
 "use client";
 import { useAuth } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -20,9 +20,7 @@ import api from "../../../utils/api";
 
 export default function Dashboard() {
   const { getToken } = useAuth();
-  const queryClient = useQueryClient();
   const [isModalOpen, setIsModalOpen] = useState(false);
-
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
