@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default function DeleteWorkspaceModal({ workspaceName, onDelete, onCancel }) {
+export default function DeleteWorkspaceModal({ value, onDelete, onCancel, name }) {
   return (
     <div className="p-2 w-full max-w-md  space-y-4">
       <h2 className="text-xl font-semibold text-gray-800">Delete Workspace?</h2>
       <p className="text-gray-600">
-        Are you sure you want to permanently delete the workspace <span className="font-bold">{workspaceName}</span>?
+        Are you sure you want to permanently delete the {name} <span className="font-bold">{value}</span>?
       </p>
       <div className="flex justify-end space-x-4">
         <button

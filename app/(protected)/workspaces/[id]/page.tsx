@@ -261,8 +261,9 @@ export default function WorkspaceDetail() {
       <Modal isOpen={isDeleteModalOpen} onClose={closeDeleteModal}>
         <DeleteWorkspaceModal
           onDelete={DeleteWorkspace}
-          workspaceName={workspace.name}
+          value={workspace.name}
           onCancel={closeDeleteModal}
+          name='Workspace'
         />
       </Modal>
       <Modal isOpen={isEditorModalOpen} onClose={closeEditorModal}>
