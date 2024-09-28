@@ -10,7 +10,7 @@ export const metadata = {
   keywords: ['sass', 'nextjs', 'react'],
 };
 
-const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY
+const clerkPubKey = 'pk_test_c3VyZS1zcXVpZC05LmNsZXJrLmFjY291bnRzLmRldiQ'
 
 export default function RootLayout({ children }) {
   return (
