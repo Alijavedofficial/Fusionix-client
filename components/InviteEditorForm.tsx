@@ -51,7 +51,7 @@ export default function InviteEditorForm({
 
       <div className="flex flex-col">
         <label htmlFor="email" className="mb-2 text-gray-700 font-medium">
-          Editor's Email
+          Editor&apos;s Email
         </label>
         <input
           type="email"

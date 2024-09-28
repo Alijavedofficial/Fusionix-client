@@ -23,7 +23,6 @@ const AcceptInvitation = () => {
   return (
     <div>
       <button className='bg-black text-white p-2' onClick={acceptInvitation}>Accept Invitation</button>
-
       <p>{message}</p>
     </div>
   );

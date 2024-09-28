@@ -4,7 +4,6 @@ import { useAuth, useUser } from "@clerk/nextjs";
 import { Icon } from "@iconify/react";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import Image from "next/image";
-import Link from "next/link";
 import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
@@ -19,8 +18,8 @@ import {
   PopoverTrigger,
 } from "../../../../components/ui/PopOver";
 import UploadVideo from "../../../../components/UploadVideo";
-import api from "../../../../utils/api";
 import Videos from "../../../../components/Videos";
+import api from "../../../../utils/api";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
@@ -114,8 +113,8 @@ export default function WorkspaceDetail() {
 
   const renderEditors = () => {
     return workspace.editors.map((editor) => (
-      <div>
-        <li key={editor.userId} className="text-gray-700">
+      <div key={editor.userId}>
+        <li className="text-gray-700">
           {editor.name}
         </li>
         <Image
