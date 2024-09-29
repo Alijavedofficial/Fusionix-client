@@ -1,5 +1,5 @@
 import { useState } from "react";
-import api from "../utils/api";
+import api from "@/utils/api";
 import { useParams } from "next/navigation";
 import { Icon } from "@iconify/react";
 import { toast } from "react-toastify";

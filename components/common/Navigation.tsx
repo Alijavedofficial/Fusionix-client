@@ -2,7 +2,7 @@
 import Link from 'next/link';
 import { UserButton, useUser } from '@clerk/nextjs';
 import { Icon } from '@iconify/react';
-import ThemeToggleButton from './ui/ThemeToggleButton'; 
+import ThemeToggleButton from '../ui/ThemeToggleButton';
 
 export default function Navigation({ isOpen, setIsOpen }) {
   const { user } = useUser();

@@ -2,8 +2,8 @@ import { useAuth } from "@clerk/nextjs";
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { CreateWorkspaceFormdata } from "../Types";
-import api from "../utils/api";
+import { CreateWorkspaceFormdata } from "@/Types";
+import api from "@/utils/api";
 
 const UpdateSpace = (workspaceId) => {
   const {

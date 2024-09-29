@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import api from "../utils/api";
+import api from "@/utils/api";
 import { toast } from "react-toastify";
 import { useForm } from "react-hook-form";
-import { CreateWorkspaceFormdata } from "../Types";
+import { CreateWorkspaceFormdata } from "@/Types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { useAuth } from "@clerk/nextjs";
 

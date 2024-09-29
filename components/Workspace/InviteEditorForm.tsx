@@ -2,8 +2,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { InviteEditor, InviteEditorFormProps } from "../Types";
-import api from "../utils/api";
+import { InviteEditor, InviteEditorFormProps } from "@/Types";
+import api from "@/utils/api";
 
 export default function InviteEditorForm({
   workspaceId,

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import api from "../utils/api";
+import api from "@/utils/api";
 import { Icon } from "@iconify/react";
 
 const YouTubeConnect: React.FC = () => {

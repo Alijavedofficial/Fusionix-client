@@ -1,7 +1,7 @@
 'use client'
 import Plyr from 'plyr';
 import 'plyr/dist/plyr.css';
-import '../Styles/player.css'
+import '../../Styles/player.css'
 
 import { useEffect, useRef } from 'react';
 

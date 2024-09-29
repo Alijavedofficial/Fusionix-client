@@ -4,7 +4,7 @@ import { useAuth } from "@clerk/nextjs";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
-import api from "../utils/api";
+import api from "@/utils/api";
 import { useQuery } from "@tanstack/react-query";
 
 export default function Videos() {
