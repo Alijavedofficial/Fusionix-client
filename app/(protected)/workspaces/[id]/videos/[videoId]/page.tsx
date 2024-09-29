@@ -5,11 +5,11 @@ import { Icon } from "@iconify/react";
 import { redirect, useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "react-toastify";
-import Loader from "../../../../../../components/Loader";
-import YouTubeConnect from "../../../../../../components/youtubeConnect";
-import VideoPlayer from "../../../../../../components/youtubePlayer";
-import FormatDate from "../../../../../../helpers/DateFormatter";
-import api from "../../../../../../utils/api";
+import Loader from "@/components/common/Loader";
+import YouTubeConnect from "@/components/Video/youtubeConnect";
+import VideoPlayer from "@/components/Video/youtubePlayer";
+import FormatDate from "@/helpers/DateFormatter";
+import api from "@/utils/api";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import {
@@ -17,8 +17,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "../../../../../../components/ui/PopOver";
-import DeleteWorkspaceModal from "../../../../../../components/DeleteConfirmation";
-import Modal from "../../../../../../components/Modal";
+import DeleteWorkspaceModal from "@/components/Workspace/DeleteConfirmation";
+import Modal from "@/components/common/Modal";
 
 interface Video {
   _id: string;

@@ -27,7 +27,6 @@ export default function ThemeToggleButton() {
     );
   }
 
-  // Display sun icon for dark mode, moon icon for light mode
   return (
     <button onClick={() => setTheme(resolvedTheme === 'dark' ? 'light' : 'dark')}>
       {resolvedTheme === 'dark' ? <FiSun /> : <FiMoon />}

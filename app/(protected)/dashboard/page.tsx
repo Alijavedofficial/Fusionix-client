@@ -6,9 +6,9 @@ import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import CreateSpace from "../../../components/createSpace";
-import Loader from "../../../components/Loader";
-import Modal from "../../../components/Modal";
+import CreateSpace from "@/components/Workspace/createSpace";
+import Loader from "@/components/common/Loader";
+import Modal from "@/components/common/Modal";
 import {
   Tooltip,
   TooltipContent,

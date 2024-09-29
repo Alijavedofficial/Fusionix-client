@@ -5,10 +5,10 @@ import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { useState } from "react";
 import { toast } from "react-toastify";
-import { Workspace } from "../../../Types";
-import Loader from "../../../components/Loader";
-import FormatDate from "../../../helpers/DateFormatter";
-import api from "../../../utils/api";
+import { Workspace } from "@/Types";
+import Loader from "@/components/common/Loader";
+import FormatDate from "@/helpers/DateFormatter";
+import api from "@/utils/api";
 
 export default function Workspaces() {
   const [searchTerm, setSearchTerm] = useState("");

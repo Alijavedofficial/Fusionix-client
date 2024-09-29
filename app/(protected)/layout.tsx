@@ -1,7 +1,7 @@
 'use client'
 import { ToastContainer } from 'react-toastify';
-import Navigation from '../../components/Navigation';
-import Sidebar from '../../components/sidebar'; 
+import Navigation from '@/components/common/Navigation';
+import Sidebar from '@/components/common/sidebar';
 import { useState } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 

@@ -1,7 +1,7 @@
 'use client';
 import { Icon } from '@iconify/react';
 import React, { useState } from 'react';
-import { Member } from '../../../Types';
+import { Member } from '@/Types';
 
 
 
@@ -9,7 +9,6 @@ const members: Member[] = [
   { id: '1', name: 'Owner Name', email: 'owner@example.com', role: 'owner' },
   { id: '2', name: 'Editor One', email: 'editor1@example.com', role: 'editor' },
   { id: '3', name: 'Editor Two', email: 'editor2@example.com', role: 'editor' },
-  // Add more members as needed
 ];
 
 const MembersPage: React.FC = () => {

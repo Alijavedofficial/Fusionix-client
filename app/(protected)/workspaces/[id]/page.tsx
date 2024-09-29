@@ -8,18 +8,18 @@ import { useParams, useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import DeleteWorkspaceModal from "../../../../components/DeleteConfirmation";
-import InviteEditorForm from "../../../../components/InviteEditorForm";
-import Loader from "../../../../components/Loader";
-import Modal from "../../../../components/Modal";
+import DeleteWorkspaceModal from "@/components/Workspace/DeleteConfirmation";
+import InviteEditorForm from "@/components/Workspace/InviteEditorForm";
+import Loader from "@/components/common/Loader";
+import Modal from "@/components/common/Modal";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from "../../../../components/ui/PopOver";
-import UploadVideo from "../../../../components/UploadVideo";
-import Videos from "../../../../components/Videos";
-import api from "../../../../utils/api";
+import UploadVideo from "@/components/Video/UploadVideo";
+import Videos from "@/components/Video/Videos";
+import api from "@/utils/api";
 
 export default function WorkspaceDetail() {
   const { id } = useParams();
