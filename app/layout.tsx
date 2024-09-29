@@ -1,23 +1,29 @@
-import { ClerkProvider } from '@clerk/nextjs';
-import './globals.css';
-import { Inter, Montserrat} from "next/font/google";
+import { ClerkProvider } from "@clerk/nextjs";
+import "./globals.css";
+import { Poppins } from "next/font/google";
+import { ThemeProviders } from "@/Providers/ThemeProviders";
 
-const Interr = Inter({ subsets: ["latin"] });
+const Interr = Poppins({
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700", "800"],
+});
 
 export const metadata = {
-  title: 'Fusionix',
-  description: 'A collaboration platform for YouTubers and editors',
-  keywords: ['sass', 'nextjs', 'react'],
+  title: "Fusionix",
+  description: "A collaboration platform for YouTubers and editors",
+  keywords: ["sass", "nextjs", "react"],
 };
 
-const clerkPubKey = 'pk_test_c3VyZS1zcXVpZC05LmNsZXJrLmFjY291bnRzLmRldiQ'
+const clerkPubKey = process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY;
 
 export default function RootLayout({ children }) {
   return (
-    <ClerkProvider  publishableKey={clerkPubKey}>
+    <ClerkProvider publishableKey={clerkPubKey}>
       <html>
         <body className={Interr.className}>
-          <main className="">{children}</main>
+          <ThemeProviders>
+            <main className="">{children}</main>
+          </ThemeProviders>
         </body>
       </html>
     </ClerkProvider>

@@ -2,10 +2,24 @@
 @tailwind components;
 @tailwind utilities;
 
-
-body {
-    background-color: #f4f5f7;
+/* Default (light mode) */
+:root {
+  --bg-color: #f4f5f7;
+  --text-color: black;
 }
+
+/* Dark mode */
+html.dark {
+  --bg-color: black;
+  --text-color: white;
+}
+
+/* Apply the colors */
+body {
+  background-color: var(--bg-color);
+  color: var(--text-color);
+}
+
 .loading {
     --speed-of-animation: 1s;
     --gap: 6px;
