@@ -1,12 +1,13 @@
-
-import FeaturesSection from "@/components/Landing/Features";
-import HeroSection from "@/components/Landing/Hero";
-import Navbar from "@/components/Landing/Navbar";
-import PricingSection from "@/components/Landing/Pricing/PricingSection";
-import WhyUs from "@/components/Landing/WhyUs";
-import WorkTogetherSection from "@/components/Landing/WorkTogether";
-import Footer from "@/components/Landing/footer/Footer";
+import dynamic from "next/dynamic";
 import React from "react";
+
+const FeaturesSection = dynamic(() => import("@/components/Landing/Features"));
+const HeroSection = dynamic(() => import("@/components/Landing/Hero"));
+const Navbar = dynamic(() => import("@/components/Landing/Navbar"));
+const PricingSection = dynamic(() => import("@/components/Landing/Pricing/PricingSection"));
+const WhyUs = dynamic(() => import("@/components/Landing/WhyUs"));
+const WorkTogetherSection = dynamic(() => import("@/components/Landing/WorkTogether"));
+const Footer = dynamic(() => import("@/components/Landing/footer/Footer"));
 
 const HomePage: React.FC = () => {
 
